@@ -16,9 +16,6 @@
 
 #include "Random.h"
 
-#include <iostream>
-#define DB(x) std::cout << x << "\n" << std::flush;
-
 
 namespace de
 {
@@ -70,11 +67,6 @@ namespace de
                     {
                         std::shuffle(permutation.begin(), permutation.end(), rng::Rand::generator);
 
-                        // const Vector& x1 = population[randInt(0, popSize)];
-                        // const Vector& x2 = population[randInt(0, popSize)];
-                        // const Vector& x3 = population[randInt(0, popSize)];
-
-
                         const Vector& x1 = population[permutation[0] != i ? permutation[0] : permutation.back()];
                         const Vector& x2 = population[permutation[1] != i ? permutation[1] : permutation.back()];
                         const Vector& x3 = population[permutation[2] != i ? permutation[2] : permutation.back()];
@@ -92,10 +84,6 @@ namespace de
 
                             if(child[j] < fitness.lower[j] || child[j] > fitness.upper[j])
                                 child[j] = parent[j];
-                                //child[j] = randInt(0, 2) ? parent[j] : randDouble(fitness.lower[j], fitness.upper[j]);
-                                //child[j] = randDouble(fitness.lower[j], fitness.upper[j]);;
-
-                            //child[j] = std::min(fitness.upper[j], std::max(fitness.lower[j], child[j]));
                         }
 
                         fitness(child);
@@ -111,7 +99,6 @@ namespace de
                         if(bestChild.fitness < parent.fitness)
                             parent = bestChild;
                     }
-                       // parent = std::min(parent, bestChild, [](const auto& x, const auto& y){ return x.fitness < y.fitness; });
 
                     else
                         parent = std::min(parent, bestChild);
@@ -124,38 +111,6 @@ namespace de
                 best = std::min(best, population[0]);
 
                 Sr = (iter < (maxIter / 3) ? Sr - (3.0 / maxIter) * (Srmax - Srmin) : Srmin);
-
-
-
-
-                // if(best.feasible() && std::abs(best.fitness - fitBest) <= 1e-6)
-                // 	fitCnt++;
-
-                // else
-                // 	fitBest = best.fitness, fitCnt = 0;
-
-                // if(fitCnt >= 100)
-                // {
-                // 	for(int i = 0; i < popSize; ++i)
-                // 	{
-                // 		for(int j = 0; j < N; ++j)
-                // 			population[i][j] = randDouble( fitness.lower[j], fitness.upper[j] );
-
-                // 		fitness(population[i]);
-                // 	}
-
-                // 	std::sort( population.begin(), population.end() );
-
-                //     best = population.front();
-                // 	//best = std::min(best, population.front());
-
-                // 	fitCnt = 0;
-                // }
-
-
-
-
-                //DB(iter << "      " << best.fitness << "      " << best.violation << "       " << fitness.FEs);
             }
 
             return best;

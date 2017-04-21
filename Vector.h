@@ -76,8 +76,8 @@ namespace de
                 return this->violation < x.violation;
             }
 
-            double fitness;
-            double violation;
+            double fitness = 1e8;
+            double violation = 1e8;
 
             double factor;
             double cross;

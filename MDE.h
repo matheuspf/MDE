@@ -32,8 +32,8 @@ namespace de
         using Population  = std::vector<Vector>;
 
 
-        MDE(int popSize = 30, double Fa = 0.8, double Fb = 0.1, double Cr = 0.9, double Srmax = 0.55,
-            double Srmin = 0.025, int childrens = 5, double eps = 1e-4, int maxIter = 3333) :
+        MDE(int popSize = 60, double Fa = 0.8, double Fb = 0.1, double Cr = 0.9, double Srmax = 0.55,
+            double Srmin = 0.025, int childrens = 3, double eps = 1e-4, int maxIter = 3334) :
             popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
             childrens(childrens), eps(eps), maxIter(maxIter), permutation(popSize), 
             population(popSize), rngEngine(std::chrono::system_clock::now().time_since_epoch().count())
@@ -58,7 +58,7 @@ namespace de
             int fitCnt = 0;
 
 
-            while(!terminate(best) && iter++ < maxIter)
+            while(!terminate(best) && iter++ < maxIter && fitness.FEs <= 5e5)
             {
                 for(int i = 0; i < population.size(); ++i)
                 {
@@ -91,9 +91,9 @@ namespace de
                                 child[j] = parent[j];
 
                             if(child[j] < fitness.lower[j] || child[j] > fitness.upper[j])
-                                //child[j] = parent[j];
-                                //child[j] = randInt(0, 2) ? parent[j] : randDouble(fitness.lower[j], fitness.upper[j]);;
-                                child[j] = randDouble(fitness.lower[j], fitness.upper[j]);;
+                                child[j] = parent[j];
+                                //child[j] = randInt(0, 2) ? parent[j] : randDouble(fitness.lower[j], fitness.upper[j]);
+                                //child[j] = randDouble(fitness.lower[j], fitness.upper[j]);;
 
                             //child[j] = std::min(fitness.upper[j], std::max(fitness.lower[j], child[j]));
                         }
@@ -121,36 +121,41 @@ namespace de
 
                 std::sort( population.begin(), population.end() );
 
-                best = population[0];
+                best = std::min(best, population[0]);
 
                 Sr = (iter < (maxIter / 3) ? Sr - (3.0 / maxIter) * (Srmax - Srmin) : Srmin);
 
 
-                if(best.feasible() && std::abs(best.fitness - fitBest) <= 1e-4)
-                	fitCnt++;
-
-                else
-                	fitBest = best.fitness, fitCnt = 0;
-
-                if(fitCnt >= 50)
-                {
-                	for(int i = 5; i < popSize; ++i)
-                	{
-                		for(int j = 0; j < N; ++j)
-                			population[i][j] = randDouble( fitness.lower[j], fitness.upper[j] );
-
-                		fitness(population[i]);
-                	}
-
-                	std::sort( population.begin(), population.end() );
-
-                	best = population.front();
-
-                	fitCnt = 0;
-                }
 
 
-                DB(iter << "      " << best.fitness << "      " << best.violation << "       " << fitness.FEs);
+                // if(best.feasible() && std::abs(best.fitness - fitBest) <= 1e-6)
+                // 	fitCnt++;
+
+                // else
+                // 	fitBest = best.fitness, fitCnt = 0;
+
+                // if(fitCnt >= 100)
+                // {
+                // 	for(int i = 0; i < popSize; ++i)
+                // 	{
+                // 		for(int j = 0; j < N; ++j)
+                // 			population[i][j] = randDouble( fitness.lower[j], fitness.upper[j] );
+
+                // 		fitness(population[i]);
+                // 	}
+
+                // 	std::sort( population.begin(), population.end() );
+
+                //     best = population.front();
+                // 	//best = std::min(best, population.front());
+
+                // 	fitCnt = 0;
+                // }
+
+
+
+
+                //DB(iter << "      " << best.fitness << "      " << best.violation << "       " << fitness.FEs);
             }
 
             return best;
@@ -172,7 +177,7 @@ namespace de
 
         inline bool terminate (const Vector& x)
         {
-            return x.feasible() && (x.fitness < eps);
+            return x.feasible() && (x.fitness <= eps);
         }
 
 

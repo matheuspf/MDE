@@ -14,8 +14,7 @@ int main()
 {
 	int seed = 270001;
 
-
-	int n = 25, FEs = 0;
+	int n = 25, FEs = 0, suc = 0;
 
 	for(int i = 0; i < n; ++i)
 	{
@@ -25,13 +24,19 @@ int main()
 
 	    auto best = mde();
 
-	    FEs += mde.fitness.FEs;
+	    //if(mde.fitness.FEs >= 5e5) DB("Do not converged\n");
+
+	    if(mde.fitness.FEs <= 5e5)
+	    	FEs += mde.fitness.FEs, suc++;
 	}
 
-	DB(FEs / double(n));
+	DB((FEs / double(suc)) * (n / double(suc)));
 
 
-	// de::MDE<de::PenaltyEps<de::CEC_2006::F3>> mde;
+	// int seed = 270005;
+	// rng::Rand::generator.seed(seed++);
+
+	// de::MDE<de::PenaltyEps<de::CEC_2006::F2>> mde;
 
 	// auto best = mde();
 

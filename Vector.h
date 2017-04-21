@@ -64,7 +64,7 @@ namespace de
             using Base::Base;
 
 
-            inline bool feasible () const { return violation <= 1e-15; }
+            inline bool feasible () const { return violation == 0.0; }
 
             bool operator < (const Constrained& x) const
             {

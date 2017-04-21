@@ -15,27 +15,30 @@
 #include <chrono>
 
 #include "Random.h"
+#include "FunctionBase.h"
 
+#include <iostream>
+#define DB(x) std::cout << x << "\n" << std::flush
 
 namespace de
 {
-    template <class FitnessType>
+    template <class FunctionType>
     class MDE
     {
     public:
 
-        using Fitness     = FitnessType;
-        using Vector      = typename Fitness::Vector;
-        using Population  = std::vector<Vector>;
+        using Function   = SetValues<FunctionType>;
+        using Vector     = typename Function::Vector;
+        using Population = std::vector<Vector>;
 
 
-        MDE(int popSize = 60, double Fa = 0.8, double Fb = 0.1, double Cr = 0.9, double Srmax = 0.55,
-            double Srmin = 0.025, int childrens = 3, double eps = 1e-4, int maxIter = 3334) :
+        MDE(int popSize = 30, double Fa = 0.8, double Fb = 0.1, double Cr = 0.9, double Srmax = 0.55,
+            double Srmin = 0.025, int childrens = 5, double eps = 1e-4, int maxIter = 3333) :
             popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
             childrens(childrens), eps(eps), maxIter(maxIter), permutation(popSize), 
             population(popSize), rngEngine(std::chrono::system_clock::now().time_since_epoch().count())
         {
-        	N = fitness.N;
+        	N = function.N;
 
             std::iota( permutation.begin(), permutation.end(), 0 );
         }
@@ -55,7 +58,7 @@ namespace de
             int fitCnt = 0;
 
 
-            while(!terminate(best) && iter++ < maxIter && fitness.FEs <= 5e5)
+            while(!converged(best) && iter++ < maxIter)
             {
                 for(int i = 0; i < population.size(); ++i)
                 {
@@ -82,16 +85,16 @@ namespace de
                             else
                                 child[j] = parent[j];
 
-                            if(child[j] < fitness.lower[j] || child[j] > fitness.upper[j])
+                            if(child[j] < function.lower[j] || child[j] > function.upper[j])
                                 child[j] = parent[j];
                         }
 
-                        fitness(child);
+                        function(child);
 
                         bestChild = std::min(bestChild, child);
                     }
 
-                    if(terminate(bestChild))
+                    if(converged(bestChild))
                         return (best = bestChild);
 
                     if(randDouble(0.0, 1.0) < Sr)
@@ -111,6 +114,9 @@ namespace de
                 best = std::min(best, population[0]);
 
                 Sr = (iter < (maxIter / 3) ? Sr - (3.0 / maxIter) * (Srmax - Srmin) : Srmin);
+
+
+                //DB(iter << "      " << best.fitness);
             }
 
             return best;
@@ -124,15 +130,15 @@ namespace de
                 x = Vector(N);
 
                 for(int i = 0; i < N; ++i)
-                    x[i] = randDouble( fitness.lower[i], fitness.upper[i] );
+                    x[i] = randDouble( function.lower[i], function.upper[i] );
 
-                fitness(x);
+                function(x);
             }
         }
 
-        inline bool terminate (const Vector& x)
+        inline bool converged (const Vector& x)
         {
-            return x.feasible() && (x.fitness <= eps);
+            return x.feasible() && (x.fitness - function.optimal <= eps);
         }
 
 
@@ -161,7 +167,7 @@ namespace de
 
         Vector best;
 
-        Fitness fitness;
+        Function function;
 
 
         rng::RandInt    randInt;

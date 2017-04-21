@@ -10,7 +10,7 @@ The original paper can be found at: [Efrén Mezura-Montes, Jesús Velázquez-
 
 It was one of the competing methods of IEEE CEC2006 Special Session on Constrained Real-Parameter Optimization (http://www.ntu.edu.sg/home/EPNSugan/index_files/CEC-06/CEC06.htm).
 
-This implementation handles any kind of non-linear constraints in a very simple way. No dependencies, just include and use (tested on g++ 6.2.0 and clang 3.9.1). All the 24 functions of CEC2006 are under the namespace 'de::CEC2006'.
+This implementation handles any kind of non-linear constraints in a very simple way. No dependencies, just include and use (tested on g++ 6.2.0 and clang 3.9.1). All the 24 functions of CEC2006 are under the namespace 'de::CEC_2006'.
 
 Example of use (function taken from: https://www.mathworks.com/help/optim/ug/fmincon.html):
 
@@ -52,7 +52,7 @@ struct NLP : de::FunctionBase<>
     
     vector<double> inequalities (const Vector& x) 
     {
-      return { x[0] * x[0] + x[1] * x[1] - 1 };
+      return { pow(x[0] - 1.0/3, 2) + pow(x[1] - 1.0/3, 2) - pow(1.0/3, 2) };
     }
     
     
@@ -75,7 +75,7 @@ int main()
     
     de::MDE<NLP> mde;     // some default parameters
 
-    auto best = mde();    // operator() runs MDE and return best individual found
+    auto best = mde();    // operator() runs MDE and returns the best individual found
 
 
     cout << "Best individual found:    "; for(auto x : best) cout << x << "   "; cout << "\n\n";

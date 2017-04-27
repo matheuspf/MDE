@@ -24,6 +24,11 @@ namespace de
 {
     struct Parameters
     {
+        Parameters(int popSize = 30, double Fa = 0.8, double Fb = 0.1, double Cr = 0.9, double Srmax = 0.55,
+            double Srmin = 0.025, int childrens = 5, double eps = 1e-4, int maxIter = 3333) :
+        popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
+        childrens(childrens), eps(eps), maxIter(maxIter) { }
+
         int N;
         int popSize;
         double eps;
@@ -51,19 +56,37 @@ namespace de
         using Population = std::vector<Vector>;
 
 
-        MDE(int popSize = 30, double Fa = 0.8, double Fb = 0.1, double Cr = 0.9, double Srmax = 0.55,
-            double Srmin = 0.025, int childrens = 5, double eps = 1e-4, int maxIter = 3333) :
-            Parameters{function.N, popSize, eps, Fa, Fb, Cr, Srmax, Srmin, Srmax, childrens, maxIter},
-            //popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
-            //childrens(childrens), eps(eps), maxIter(maxIter), permutation(popSize), 
-            population(popSize)
-        {
-        	N = function.N;
+        using Parameters::Parameters;
 
-            DB(popSize);
+
+        MDE (const Parameters& param) : Parameters(param), permutation(popSize), population(popSize)
+        {
+            N = function.N;
+            
+            std::iota( permutation.begin(), permutation.end(), 0 );
+        }
+
+        MDE () : permutation(popSize), population(popSize)
+        {
+            N = function.N;
 
             std::iota( permutation.begin(), permutation.end(), 0 );
         }
+
+
+        // MDE(int popSize = 30, double Fa = 0.8, double Fb = 0.1, double Cr = 0.9, double Srmax = 0.55,
+        //     double Srmin = 0.025, int childrens = 5, double eps = 1e-4, int maxIter = 3333) :
+        //     Parameters{function.N, popSize, eps, Fa, Fb, Cr, Srmax, Srmin, Srmax, childrens, maxIter},
+        //     // popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
+        //     // childrens(childrens), eps(eps), maxIter(maxIter), permutation(popSize), population(popSize)
+        //     permutation(popSize), population(popSize)
+        // {
+        // 	N = function.N;
+
+        //     DB(popSize);
+
+        //     std::iota( permutation.begin(), permutation.end(), 0 );
+        // }
 
 
         Vector operator () ()

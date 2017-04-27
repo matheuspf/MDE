@@ -42,8 +42,10 @@ int main()
 
 
 	//de::MDE<de::CEC_2006::F1> mde;
+
+	de::Parameters param; param.popSize = 50;
 	
-	de::MDE<NLP> mde;
+	de::MDE<NLP> mde(param);
 
 	auto best = mde();
 

@@ -22,8 +22,27 @@
 
 namespace de
 {
+    struct Parameters
+    {
+        int N;
+        int popSize;
+        double eps;
+
+        double Fa;
+        double Fb;
+        double Cr;
+
+        double Srmax;
+        double Srmin;
+        double Sr;
+
+        int childrens;
+        int maxIter;
+    };
+
+
     template <class FunctionType>
-    class MDE
+    class MDE : Parameters
     {
     public:
 
@@ -34,11 +53,14 @@ namespace de
 
         MDE(int popSize = 30, double Fa = 0.8, double Fb = 0.1, double Cr = 0.9, double Srmax = 0.55,
             double Srmin = 0.025, int childrens = 5, double eps = 1e-4, int maxIter = 3333) :
-            popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
-            childrens(childrens), eps(eps), maxIter(maxIter), permutation(popSize), 
-            population(popSize), rngEngine(std::chrono::system_clock::now().time_since_epoch().count())
+            Parameters{function.N, popSize, eps, Fa, Fb, Cr, Srmax, Srmin, Srmax, childrens, maxIter},
+            //popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
+            //childrens(childrens), eps(eps), maxIter(maxIter), permutation(popSize), 
+            population(popSize)
         {
         	N = function.N;
+
+            DB(popSize);
 
             std::iota( permutation.begin(), permutation.end(), 0 );
         }
@@ -145,20 +167,6 @@ namespace de
 
     //private:
 
-        int N;
-        int popSize;
-        double eps;
-
-        double Fa;
-        double Fb;
-        double Cr;
-
-        double Srmax;
-        double Srmin;
-        double Sr;
-
-        int childrens;
-        int maxIter;
 
         std::vector<int> permutation;
 
@@ -172,9 +180,8 @@ namespace de
 
         rng::RandInt    randInt;
         rng::RandDouble randDouble;
-
-        std::default_random_engine rngEngine;
     };
+
 
 
 } // namespace de

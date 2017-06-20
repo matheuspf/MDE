@@ -1,33 +1,40 @@
 #include <iostream>
 
-#include "src/MDE.h"
-#include "src/FunctionBase.h"
-#include "src/CEC_2006.h"
+#include "include/MDE/MDE.h"
+#include "examples/CEC2006/CEC2006.h"
 
 using namespace std;
 
 
 
-struct NLP : de::FunctionBase<>
+struct NLP : mde::Function<>
 {
-	using Base = de::FunctionBase<>;
-
-	NLP (int N = 2) : Base(N)
+	NLP (double opt = 0.25)
 	{
-		lower = {0.0, 0.2};
-		upper = {0.5, 0.8};
+		lowerBounds = {0.0, 0.2};
+		upperBounds = {0.5, 0.8};
+
+		optimal = opt + 1e-10;
 	}
 
 
-	double operator () (const Vector& x)
+	double operator () (const vector<double>& x)
 	{
 		return 100 * pow(x[1] - x[0] * x[0], 2) + pow(1 - x[0], 2);
 	}
 
-	double constraints (const Vector& x)
+	auto equalities (const vector<double>& x)
 	{
-		return x[0] * x[0] + x[1] * x[1] - 1;
+		return 0.0;
 	}
+
+	initializer_list<double> inequalities (const vector<double>& x)
+	{
+		return {0.0};
+	}
+
+	int N = 2;
+	int FEs = 0;
 };
 
 
@@ -35,25 +42,35 @@ struct NLP : de::FunctionBase<>
 
 int main()
 {
-	int seed = 270001;
+	int seed = 270011;
 
-	rng::Rand::generator.seed(seed);
+	//help::Rand::generator.seed(seed);
 
 
+	mde::Parameters params;
 
-	//de::MDE<de::CEC_2006::F1> mde;
+	params.maxIter = 500;
+	params.popSize = 200;
+	params.eqTol = 1e-4;
+	params.bndHandle = "conservate";
 
-	de::Parameters param; param.popSize = 50;
+
+	mde::MDE<NLP> mde(params, NLP(0.25));
+
+	//de::Parameters param; param.popSize = 50;
 	
-	de::MDE<NLP> mde(param);
+	//de::MDE<NLP> mde;
 
 	auto best = mde();
+
+
+	cout << "\n\n\n";
 
 	cout << "Best individual found:    "; for(auto x : best) cout << x << "   "; cout << "\n\n";
 
 	cout << "Fitness:     " << best.fitness << "\n\n";
 
-    cout << "Constraint Violation:     " << best.violation << "\n";
+    cout << "Constraint Violation:     " << best.violation << "\n\n";
 
 
 

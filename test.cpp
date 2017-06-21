@@ -7,6 +7,8 @@ using namespace std;
 
 
 
+
+
 struct NLP : mde::Function<>
 {
 	NLP (double opt = 0.25)
@@ -49,19 +51,17 @@ int main()
 
 	mde::Parameters params;
 
-	params.maxIter = 500;
-	params.popSize = 200;
+	//params.maxIter = 500;
+	//params.popSize = 200;
 	params.eqTol = 1e-4;
 	params.bndHandle = "conservate";
 
 
-	mde::MDE<NLP> mde(params, NLP(0.25));
+	auto best = mde::MDE<NLP>(params)();
 
 	//de::Parameters param; param.popSize = 50;
 	
 	//de::MDE<NLP> mde;
-
-	auto best = mde();
 
 
 	cout << "\n\n\n";

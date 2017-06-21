@@ -29,9 +29,6 @@
 #include "Random.h"
 #include "Function.h"
 
-#include <iostream>
-#define DB(x) std::cout << x << "\n" << std::flush
-
 
 
 namespace mde
@@ -207,9 +204,6 @@ namespace mde
                   * the first (maxIter / 3) iterations. Then, it is set permanently to 'Srmin'.
                 */
                 Sr = (iter < (maxIter / 3) ? Sr - (3.0 / maxIter) * (Srmax - Srmin) : Srmin);
-
-
-                DB(iter << "      " << best.fitness << "       " << best.violation << "       " << function.FEs);
             }
 
             /// Return best found solution (not the optimal one if 'function.optimal' is specified)
@@ -234,7 +228,7 @@ namespace mde
 
             assert(it != bndMap.end() && "Invalid Bound handling option");
 
-            boundsHandle = it.second;
+            boundsHandle = it->second;
 
 
 

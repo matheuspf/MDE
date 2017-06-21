@@ -3,7 +3,7 @@
   * This is the main file. Contains the implementation of the 'MDE' (stands 
   * for Modified Differential Evolution) metaheuristic described in:
   *
-  *  http://ieeexplore.ieee.org/document/5344144/
+  *  http://ieeexplore.ieee.org/document/1688286/
   *
   * It was one of the competing methods of IEEE Congress on Evolutionary
   * Computation of 2006, on the Special Session on Constrained Real-Parameter 
@@ -42,11 +42,11 @@ namespace mde
     {
         Parameters(int popSize = 30, double Fa = 0.8, double Fb = 0.1, 
                    double Cr = 0.9, double Srmax = 0.55, double Srmin = 0.025, 
-                   int children = 5, int maxIter = 3333, 
-                   double eqTol = 1e-10, std::string bndHandle = "clip") : popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), 
-                                                                           Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
-                                                                           children(children), maxIter(maxIter), 
-                                                                           eqTol(eqTol), bndHandle(bndHandle) {}
+                   int children = 5, int maxIter = 3333, double eqTol = 1e-10,
+                   std::string bndHandle = "conservate") : popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), 
+                                                           Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
+                                                           children(children), maxIter(maxIter), 
+                                                           eqTol(eqTol), bndHandle(bndHandle) {}
 
 
         int N;        /// The number of elements in each vector. Defined by the user function
@@ -91,7 +91,7 @@ namespace mde
       * params.bndHandle = "conservate";       // Change the bound handling function
       *
       * mde::MDE<FunctionType> myMde(params);    // Create a 'mde::MDE' class with 'FunctionType' function passing 
-                                                 // the 'params' as arguments. All the other arguments are defaulted
+                                                 // the 'params' as arguments. All the other arguments are default
       * auto best = myMde();     // Execute and retrieve the best element                           
     */
 
@@ -118,7 +118,7 @@ namespace mde
         }
 
 
-        /// Here the parameters are all defaulted, and you can pass an 'FunctionType' with the parameters you want
+        /// Here the parameters are all default, and you can pass an 'FunctionType' with the parameters you want
         MDE (const FunctionType& function = FunctionType()) : permutation(popSize), population(popSize), 
                                                               function(eqTol, function)
         {
@@ -237,7 +237,7 @@ namespace mde
               * the max of the size of the lower and upper bounds (well, why in the heck would you
               * provide different non zero lenghts for lower and upper bounds anyways???). If neither
               * lower or upper bounds are initialized, we stop here. If either the lower or the upper
-              * bound vectors are not initialized, they are defaulted to a 'N' dimensional vector with
+              * bound vectors are not initialized, they are set to a 'N' dimensional vector with
               * -1e8 (lower bound) or 1e8 (upper bound).
             */
             N = function.N;

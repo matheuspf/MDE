@@ -9,8 +9,7 @@
 #include <algorithm>
 #include <cmath>
 #include <numeric>
-#include <iostream>
-
+  
 #include "Vector.h"
 
 
@@ -20,11 +19,11 @@ namespace mde
 /** Base 'mde::Function'. All user defined functions useed by MDE should inherit 
   * from this class. Here we defined the number of variables, the 'Vector' type
   * the lower and upper bounds, the optimal value for the function and dummy
-  * functions for the equalities and inequalities values. Every value is defaulted.
-  * For example, you may not specify the lower and upper bounds, but must specify
-  * the number of variables 'N'. Otherwise, if you set either lower or upper bounds,
-  * you don't need to inform the number of variables. The 'optimal' value is also
-  * optional. If the function drops bellow this value, MDE stops immediately.
+  * functions for the equalities and inequalities values. Every parameter has a 
+  * default value. For example, you may not specify the lower and upper bounds, but 
+  * must specify the number of variables 'N'. Otherwise, if you set either lower or 
+  * upper bounds, you don't need to inform the number of variables. The 'optimal' 
+  * value is also optional. If the function drops bellow this value, MDE stops immediately.
 */
 template<int NumVariables = 0>
 struct Function

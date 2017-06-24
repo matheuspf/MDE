@@ -1,6 +1,6 @@
 # MDE - Modified Differential Evolution
 
-[![Build Status](https://travis-ci.org/matheuspf/MDE.svg?branch=master)](https://travis-ci.org/matheuspf/MDE) [![Coverage Status](https://coveralls.io/repos/github/matheuspf/MDE/badge.svg?branch=master)](https://coveralls.io/github/matheuspf/MDE?branch=master)
+[![Build Status](https://travis-ci.org/matheuspf/MDE.svg?branch=master)](https://travis-ci.org/matheuspf/MDE) [![Coverage Status](https://coveralls.io/repos/github/matheuspf/MDE/badge.svg)](https://coveralls.io/github/matheuspf/MDE)
 
 
 A C++14 implementation of MDE - Modified Differential Evolution

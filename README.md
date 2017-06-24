@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/matheuspf/MDE.svg?branch=master)](https://travis-ci.org/matheuspf/MDE) [![Coverage Status](https://coveralls.io/repos/github/matheuspf/MDE/badge.svg?branch=master)](https://coveralls.io/github/matheuspf/MDE?branch=master)
 
-<br>
 
 A C++14 implementation of MDE - Modified Differential Evolution
 
@@ -89,7 +88,7 @@ struct NLP: mde::Function<2>   /// The number of variables is known at compile t
 {
     NLP ()   /// Nothing to do here
     {
-        optimal = 0.25;   /// Slightly above the optimal
+        optimal = 0.25;   /// Optimal function value
 
         /// Lower and upper bounds
         lowerBounds = {0.0, 0.2};

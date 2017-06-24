@@ -25,6 +25,7 @@
 #include <map>
 #include <assert.h>
 #include <functional>
+#include <iostream>
 
 #include "Random.h"
 #include "Function.h"
@@ -247,12 +248,11 @@ namespace mde
 
             assert(N && "Zero variables???");
 
-            if(function.lowerBounds.empty() || function.lowerBounds.size() < function.upperBounds.size())
+            if(function.lowerBounds.empty())
                 function.lowerBounds = Vector(N, -1e8);
 
-            if(function.upperBounds.empty() || function.upperBounds.size() < function.lowerBounds.size())
+            if(function.upperBounds.empty())
                 function.upperBounds = Vector(N, 1e8);
-
 
 
             /// Initializes the permutation vector used for selecting the three different vectors for the mutation

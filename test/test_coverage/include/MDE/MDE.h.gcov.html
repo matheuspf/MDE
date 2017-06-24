@@ -1,0 +1,469 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - libbash test coverage - include/MDE/MDE.h</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">include/MDE</a> - MDE.h<span style="font-size: 80%;"> (source / <a href="MDE.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">libbash test coverage</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">89</td>
+            <td class="headerCovTableEntry">91</td>
+            <td class="headerCovTableEntryHi">97.8 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2017-06-24 02:19:11</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">247</td>
+            <td class="headerCovTableEntry">327</td>
+            <td class="headerCovTableEntryMed">75.5 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /** \file MDE.h</a>
+<span class="lineNum">       2 </span>            :   *
+<span class="lineNum">       3 </span>            :   * This is the main file. Contains the implementation of the 'MDE' (stands 
+<span class="lineNum">       4 </span>            :   * for Modified Differential Evolution) metaheuristic described in:
+<span class="lineNum">       5 </span>            :   *
+<span class="lineNum">       6 </span>            :   *  http://ieeexplore.ieee.org/document/1688286/
+<span class="lineNum">       7 </span>            :   *
+<span class="lineNum">       8 </span>            :   * It was one of the competing methods of IEEE Congress on Evolutionary
+<span class="lineNum">       9 </span>            :   * Computation of 2006, on the Special Session on Constrained Real-Parameter 
+<span class="lineNum">      10 </span>            :   * Optimization. Here, I will only present brief comments about the method.
+<span class="lineNum">      11 </span>            :   * For any detailed information, please, refer to the original paper.
+<span class="lineNum">      12 </span>            : */
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : #ifndef DE_DPS_DE_DPS_H
+<span class="lineNum">      15 </span>            : #define DE_DPS_DE_DPS_H
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : #include &lt;type_traits&gt;
+<span class="lineNum">      18 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      19 </span>            : #include &lt;array&gt;
+<span class="lineNum">      20 </span>            : #include &lt;algorithm&gt;
+<span class="lineNum">      21 </span>            : #include &lt;numeric&gt;
+<span class="lineNum">      22 </span>            : #include &lt;cmath&gt;
+<span class="lineNum">      23 </span>            : #include &lt;ctime&gt;
+<span class="lineNum">      24 </span>            : #include &lt;chrono&gt;
+<span class="lineNum">      25 </span>            : #include &lt;map&gt;
+<span class="lineNum">      26 </span>            : #include &lt;assert.h&gt;
+<span class="lineNum">      27 </span>            : #include &lt;functional&gt;
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span>            : #include &quot;Random.h&quot;
+<span class="lineNum">      30 </span>            : #include &quot;Function.h&quot;
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span>            : namespace mde
+<span class="lineNum">      35 </span>            : {
+<span class="lineNum">      36 </span>            :     /** These are the parameters of the MDE algorithm. They are created on a separate
+<span class="lineNum">      37 </span>            :       * class, so it is much easier to the user to define these parameters first and
+<span class="lineNum">      38 </span>            :       * then create a 'MDE' class, passing them to the constructor. I comment very 
+<a name="39"><span class="lineNum">      39 </span>            :       * briefly about them. For detailed information, please, refer to the paper.</a>
+<span class="lineNum">      40 </span>            :     */
+<a name="41"><span class="lineNum">      41 </span><span class="lineCov">         81 :     struct Parameters</span></a>
+<span class="lineNum">      42 </span>            :     {
+<span class="lineNum">      43 </span><span class="lineCov">         27 :         Parameters(int popSize = 30, double Fa = 0.8, double Fb = 0.1, </span>
+<span class="lineNum">      44 </span>            :                    double Cr = 0.9, double Srmax = 0.55, double Srmin = 0.025, 
+<span class="lineNum">      45 </span>            :                    int children = 5, int maxIter = 3333, double eqTol = 1e-10,
+<span class="lineNum">      46 </span><span class="lineCov">         27 :                    std::string bndHandle = &quot;conservate&quot;) : popSize(popSize), Fa(Fa), Fb(Fb), Cr(Cr), </span>
+<span class="lineNum">      47 </span>            :                                                            Srmax(Srmax), Srmin(Srmin), Sr(Srmax),
+<span class="lineNum">      48 </span>            :                                                            children(children), maxIter(maxIter), 
+<span class="lineNum">      49 </span><span class="lineCov">         27 :                                                            eqTol(eqTol), bndHandle(bndHandle) {}</span>
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            :         int N;        /// The number of elements in each vector. Defined by the user function
+<span class="lineNum">      53 </span>            :         int popSize;  /// The number of elements in the population
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            :         double Fa;    /// First factor for modified differential mutation
+<span class="lineNum">      56 </span>            :         double Fb;    /// Second factor for modified differential mutation
+<span class="lineNum">      57 </span>            :         double Cr;    /// Pobability factor for modified differential mutation
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            :         double Srmax; /// Initial factor that controls the probability of accepting a solution with a smaller fitness only
+<span class="lineNum">      60 </span>            :         double Srmin; /// The same as above, but this is a lower bound
+<span class="lineNum">      61 </span>            :         double Sr;    /// The current value of this factor
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            :         int children; /// Number of different children generated in the modified differential mutation
+<span class="lineNum">      64 </span>            :         int maxIter;   /// Maximum iterations of the MDE
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span>            :         double eqTol;  /// The tolerance factor for the equality constraints. See the 'SetValues' class
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span>            :         /** this is an option to choose how solutions generated outside the bounds should
+<span class="lineNum">      70 </span>            :          *  be treated. I implemented some methods described here:
+<span class="lineNum">      71 </span>            :          *
+<span class="lineNum">      72 </span>            :          *  https://elektron.elka.pw.edu.pl/~jarabas/ALHE/krakow1.pdf
+<span class="lineNum">      73 </span>            :          *
+<span class="lineNum">      74 </span>            :          *  These are the available methods: &quot;clip&quot; (default), &quot;conservate&quot;, &quot;conservateall&quot;, 
+<span class="lineNum">      75 </span>            :          *  &quot;reinitialize&quot;. I comment very briefly how they work above their definition. 
+<span class="lineNum">      76 </span>            :          *  Again, for more details, please, refer to the papers.
+<span class="lineNum">      77 </span>            :         */
+<span class="lineNum">      78 </span>            :         std::string bndHandle;
+<span class="lineNum">      79 </span>            :     };
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            : 
+<span class="lineNum">      84 </span>            : 
+<span class="lineNum">      85 </span>            :     /** The main class. It only has a few parameters and type definitions. If you want
+<span class="lineNum">      86 </span>            :       * (it is optional) to change the default value for some parameter, here is the way:
+<span class="lineNum">      87 </span>            :       *
+<span class="lineNum">      88 </span>            :       * mde::Parameters params;      // Create a 'mde::Parameters' class
+<span class="lineNum">      89 </span>            :       *
+<span class="lineNum">      90 </span>            :       * params.popSize = 100;                  // Change the population size
+<span class="lineNum">      91 </span>            :       * params.bndHandle = &quot;conservate&quot;;       // Change the bound handling function
+<span class="lineNum">      92 </span>            :       *
+<span class="lineNum">      93 </span>            :       * mde::MDE&lt;FunctionType&gt; myMde(params);    // Create a 'mde::MDE' class with 'FunctionType' function passing 
+<span class="lineNum">      94 </span>            :                                                  // the 'params' as arguments. All the other arguments are default
+<span class="lineNum">      95 </span>            :       * auto best = myMde();     // Execute and retrieve the best element                           
+<span class="lineNum">      96 </span>            :     */
+<a name="97"><span class="lineNum">      97 </span>            : </a>
+<span class="lineNum">      98 </span>            :     template &lt;class FunctionType&gt;
+<span class="lineNum">      99 </span><span class="lineCov">         27 :     class MDE : Parameters</span>
+<span class="lineNum">     100 </span>            :     {
+<span class="lineNum">     101 </span>            :     public:
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            :         using Function   = SetValues&lt;FunctionType&gt;;    /// The 'Function' type is inherited by 'SetValues'
+<span class="lineNum">     104 </span>            :         using Vector     = typename Function::Vector;  /// The 'Vector' type is defined by 'FunctionType'
+<span class="lineNum">     105 </span>            :         using Population = std::vector&lt;Vector&gt;;        /// The 'Population' type is a 'std::vector' of 'Vector's
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span>            : 
+<span class="lineNum">     108 </span>            :         /// Type of the function pointer for the bounds handling functions. See the 'Parameters' class
+<span class="lineNum">     109 </span>            :         using BoundsHandle = void (MDE::*)(Vector&amp;, const Vector&amp;);
+<span class="lineNum">     110 </span>            : 
+<a name="111"><span class="lineNum">     111 </span>            : </a>
+<span class="lineNum">     112 </span>            :         /// Here you can pass a 'Parameters' class and an 'FunctionType' with the parameters you want
+<span class="lineNum">     113 </span><span class="lineCov">         27 :         MDE (const Parameters&amp; param,</span>
+<span class="lineNum">     114 </span><span class="lineCov">         27 :              const FunctionType&amp; function = FunctionType()) : Parameters(param), permutation(popSize), </span>
+<span class="lineNum">     115 </span><span class="lineCov">         54 :                                                               population(popSize), function(eqTol, function)</span>
+<span class="lineNum">     116 </span>            :         {
+<span class="lineNum">     117 </span><span class="lineCov">         27 :             initialize();  /// Call the initialization function</span>
+<span class="lineNum">     118 </span><span class="lineCov">         27 :         }</span>
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span>            :         /// Here the parameters are all default, and you can pass an 'FunctionType' with the parameters you want
+<span class="lineNum">     122 </span>            :         MDE (const FunctionType&amp; function = FunctionType()) : permutation(popSize), population(popSize), 
+<span class="lineNum">     123 </span>            :                                                               function(eqTol, function)
+<span class="lineNum">     124 </span>            :         {
+<span class="lineNum">     125 </span>            :             initialize();  /// Call the initialization function
+<span class="lineNum">     126 </span>            :         }
+<span class="lineNum">     127 </span>            : 
+<span class="lineNum">     128 </span>            : 
+<a name="129"><span class="lineNum">     129 </span>            : </a>
+<span class="lineNum">     130 </span>            :         /// Main function. Execute the MDE algorithm
+<span class="lineNum">     131 </span><span class="lineCov">         27 :         Vector operator () ()</span>
+<span class="lineNum">     132 </span>            :         {
+<span class="lineNum">     133 </span>            :             /// Sort the population according to the comparison function defined in the 'mde::Vector' class
+<span class="lineNum">     134 </span><span class="lineCov">         27 :             std::sort(population.begin(), population.end());</span>
+<span class="lineNum">     135 </span>            : 
+<span class="lineNum">     136 </span><span class="lineCov">         27 :             best = population.front();    /// The best element is always at the first position</span>
+<span class="lineNum">     137 </span>            : 
+<span class="lineNum">     138 </span><span class="lineCov">         27 :             int iter = 0;    /// Iteration counter</span>
+<span class="lineNum">     139 </span>            : 
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            :             /// Outter loop. Checks convergence and maximum iterations
+<span class="lineNum">     142 </span><span class="lineCov">      69373 :             while(!converged(best) &amp;&amp; iter++ &lt; maxIter)</span>
+<span class="lineNum">     143 </span>            :             {
+<span class="lineNum">     144 </span>            :                 /// First inner loop. Iterates through all elements of the population
+<span class="lineNum">     145 </span><span class="lineCov">    1075122 :                 for(int i = 0; i &lt; population.size(); ++i)</span>
+<span class="lineNum">     146 </span>            :                 {
+<span class="lineNum">     147 </span><span class="lineCov">    1040449 :                     Vector&amp; parent = population[i];     /// The current parent</span>
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span><span class="lineCov">    1145221 :                     Vector bestChild(N);   /// The best child from all the generated children for the current parent</span>
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            :                     /// Generate 'children' 
+<span class="lineNum">     152 </span><span class="lineCov">    6242694 :                     for(int k = 0; k &lt; children; ++k)</span>
+<span class="lineNum">     153 </span>            :                     {
+<span class="lineNum">     154 </span>            :                         /** This is the easiest way (although not the fastest) to unbiasedly generate
+<span class="lineNum">     155 </span>            :                           * three different random numbers that also differ from 'i'. These numbers are
+<span class="lineNum">     156 </span>            :                           * the indexes for the three vectors needed for the modified differential mutation
+<span class="lineNum">     157 </span>            :                         */ 
+<span class="lineNum">     158 </span><span class="lineCov">    5202245 :                         std::random_shuffle(permutation.begin(), permutation.end());</span>
+<span class="lineNum">     159 </span>            : 
+<span class="lineNum">     160 </span><span class="lineCov">    5202245 :                         const Vector&amp; x1 = population[permutation[0] != i ? permutation[0] : permutation.back()];</span>
+<span class="lineNum">     161 </span><span class="lineCov">    5202245 :                         const Vector&amp; x2 = population[permutation[1] != i ? permutation[1] : permutation.back()];</span>
+<span class="lineNum">     162 </span><span class="lineCov">    5202245 :                         const Vector&amp; x3 = population[permutation[2] != i ? permutation[2] : permutation.back()];</span>
+<span class="lineNum">     163 </span>            : 
+<span class="lineNum">     164 </span>            :                         /// Perform the modified differential mutation and return a child
+<span class="lineNum">     165 </span><span class="lineCov">    5726110 :                         Vector child = differentialMutation(x1, x2, x3, parent);</span>
+<span class="lineNum">     166 </span>            : 
+<span class="lineNum">     167 </span>            :                         /// Calling a member function with 'std::function' is easy like that
+<span class="lineNum">     168 </span><span class="lineCov">    5202245 :                         boundsHandle(this, child, parent);</span>
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span>            : 
+<span class="lineNum">     171 </span><span class="lineCov">    5202245 :                         function(child);    /// Set fitness and violation for the new vector</span>
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span><span class="lineCov">    5202245 :                         bestChild = std::min(bestChild, child);   /// Take the best between both</span>
+<span class="lineNum">     174 </span>            :                     }
+<span class="lineNum">     175 </span>            : 
+<span class="lineNum">     176 </span>            :                     /// If convergence is reached, set 'best' to 'bestChild' and return it
+<span class="lineNum">     177 </span><span class="lineCov">    1040449 :                     if(converged(bestChild))</span>
+<span class="lineNum">     178 </span><span class="lineCov">         18 :                         return (best = bestChild);</span>
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span>            :                     /** This is a feature of the 'MDE' method. With probability 'Sr' (that is 
+<span class="lineNum">     182 </span>            :                       * calculated based on the values of 'Srmax' and 'Srmin') we compare the
+<span class="lineNum">     183 </span>            :                       * vectors based only on their fitness values, instead of making the MDE
+<span class="lineNum">     184 </span>            :                       * comparison. This is helpfull in situations where a solution is slightly
+<span class="lineNum">     185 </span>            :                       * infeasible, but may be close to a optimum. In earlier stages of the
+<span class="lineNum">     186 </span>            :                       * search, 'Sr' assumes greater values starting from 'Srmax', and then
+<span class="lineNum">     187 </span>            :                       * decreases at every iteration, reaching 'Srmin'.
+<span class="lineNum">     188 </span>            :                     */
+<span class="lineNum">     189 </span><span class="lineCov">    1040431 :                     if(randDouble(0.0, 1.0) &lt; Sr)</span>
+<span class="lineNum">     190 </span>            :                     {
+<span class="lineNum">     191 </span><span class="lineCov">     150640 :                         if(bestChild.fitness &lt; parent.fitness) /// Compare only the fitness value and take the best</span>
+<span class="lineNum">     192 </span><span class="lineCov">      58441 :                             parent = bestChild;</span>
+<span class="lineNum">     193 </span>            :                     }
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span>            :                     else
+<span class="lineNum">     196 </span><span class="lineCov">     889791 :                         parent = std::min(parent, bestChild);  /// Use MDE comparison and thake the best</span>
+<span class="lineNum">     197 </span>            : 
+<span class="lineNum">     198 </span><span class="lineCov">    1040431 :                     best = std::min(best, bestChild);   /// Take the best between both (using MDE comparison)</span>
+<span class="lineNum">     199 </span>            :                 }
+<span class="lineNum">     200 </span>            : 
+<span class="lineNum">     201 </span><span class="lineCov">      34673 :                 std::sort( population.begin(), population.end() );  /// Sort MDE population</span>
+<span class="lineNum">     202 </span>            : 
+<span class="lineNum">     203 </span>            :                 /** The formula for calculating the 'Sr' probability. It drecreases smoothly in
+<span class="lineNum">     204 </span>            :                   * the first (maxIter / 3) iterations. Then, it is set permanently to 'Srmin'.
+<span class="lineNum">     205 </span>            :                 */
+<span class="lineNum">     206 </span><span class="lineCov">      34673 :                 Sr = (iter &lt; (maxIter / 3) ? Sr - (3.0 / maxIter) * (Srmax - Srmin) : Srmin);</span>
+<span class="lineNum">     207 </span>            :             }
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span>            :             /// Return best found solution (not the optimal one if 'function.optimal' is specified)
+<span class="lineNum">     210 </span><span class="lineCov">          9 :             return best;</span>
+<span class="lineNum">     211 </span>            :         }
+<span class="lineNum">     212 </span>            : 
+<a name="213"><span class="lineNum">     213 </span>            : </a>
+<span class="lineNum">     214 </span>            :         /// Initialization procedure. Must be called if you want to run the algorithm again from scratch
+<span class="lineNum">     215 </span><span class="lineCov">         27 :         void initialize ()</span>
+<span class="lineNum">     216 </span>            :         {
+<span class="lineNum">     217 </span>            :             /// A mapping from a string to a pointer to member function for handling the bounds
+<span class="lineNum">     218 </span>            :             static std::map&lt;std::string, BoundsHandle&gt; bndMap = {{ &quot;conservate&quot;,    &amp;MDE::conservate   },
+<span class="lineNum">     219 </span>            :                                                                  { &quot;clip&quot;,          &amp;MDE::clip         },
+<span class="lineNum">     220 </span><span class="lineCov">         27 :                                                                  { &quot;reinitialize&quot;,  &amp;MDE::reinitialize }};</span>
+<span class="lineNum">     221 </span>            : 
+<span class="lineNum">     222 </span>            :             /// Make the all the input lower case                                        
+<span class="lineNum">     223 </span><span class="lineCov">         27 :             std::transform(bndHandle.begin(), bndHandle.end(), bndHandle.begin(), ::tolower);</span>
+<span class="lineNum">     224 </span>            : 
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span>            :             /// Verify if the option exists and map to it
+<span class="lineNum">     227 </span><span class="lineCov">         27 :             auto it = bndMap.find(bndHandle);</span>
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span><span class="lineCov">         27 :             assert(it != bndMap.end() &amp;&amp; &quot;Invalid Bound handling option&quot;);</span>
+<span class="lineNum">     230 </span>            : 
+<span class="lineNum">     231 </span><span class="lineCov">         27 :             boundsHandle = it-&gt;second;</span>
+<span class="lineNum">     232 </span>            : 
+<span class="lineNum">     233 </span>            : 
+<span class="lineNum">     234 </span>            : 
+<span class="lineNum">     235 </span>            :             /** Here we deal with unnitialized number of variables or lower and upper bounds.
+<span class="lineNum">     236 </span>            :               * If 'N' was not initialized (neither by compile or runtime values), we set it to 
+<span class="lineNum">     237 </span>            :               * the max of the size of the lower and upper bounds (well, why in the heck would you
+<span class="lineNum">     238 </span>            :               * provide different non zero lenghts for lower and upper bounds anyways???). If neither
+<span class="lineNum">     239 </span>            :               * lower or upper bounds are initialized, we stop here. If either the lower or the upper
+<span class="lineNum">     240 </span>            :               * bound vectors are not initialized, they are set to a 'N' dimensional vector with
+<span class="lineNum">     241 </span>            :               * -1e8 (lower bound) or 1e8 (upper bound).
+<span class="lineNum">     242 </span>            :             */
+<span class="lineNum">     243 </span><span class="lineCov">         27 :             N = function.N;</span>
+<span class="lineNum">     244 </span>            : 
+<span class="lineNum">     245 </span><span class="lineCov">         27 :             if(N == 0)</span>
+<span class="lineNum">     246 </span><span class="lineCov">          2 :                 N = function.N = std::max(function.upperBounds.size(), function.lowerBounds.size());</span>
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span><span class="lineCov">         27 :             assert(N &amp;&amp; &quot;Zero variables???&quot;);</span>
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span><span class="lineCov">         27 :             if(function.lowerBounds.empty() || function.lowerBounds.size() &lt; function.upperBounds.size())</span>
+<span class="lineNum">     251 </span><span class="lineNoCov">          0 :                 function.lowerBounds = Vector(N, -1e8);</span>
+<span class="lineNum">     252 </span>            : 
+<span class="lineNum">     253 </span><span class="lineCov">         27 :             if(function.upperBounds.empty() || function.upperBounds.size() &lt; function.lowerBounds.size())</span>
+<span class="lineNum">     254 </span><span class="lineNoCov">          0 :                 function.upperBounds = Vector(N, 1e8);</span>
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            : 
+<span class="lineNum">     257 </span>            : 
+<span class="lineNum">     258 </span>            :             /// Initializes the permutation vector used for selecting the three different vectors for the mutation
+<span class="lineNum">     259 </span><span class="lineCov">         27 :             std::iota(permutation.begin(), permutation.end(), 0);</span>
+<span class="lineNum">     260 </span>            :     
+<span class="lineNum">     261 </span>            : 
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            :             /// Initializes a random population
+<span class="lineNum">     264 </span><span class="lineCov">        837 :             for(auto&amp; x : population)</span>
+<span class="lineNum">     265 </span>            :             {
+<span class="lineNum">     266 </span><span class="lineCov">        810 :                 x = newVector();  /// 'N' dimensional 'Vector' class</span>
+<span class="lineNum">     267 </span>            : 
+<span class="lineNum">     268 </span><span class="lineCov">        810 :                 function(x);  /// Calculate both fitness and violation for vector 'x'</span>
+<span class="lineNum">     269 </span>            :             }
+<span class="lineNum">     270 </span><span class="lineCov">         27 :         }</span>
+<span class="lineNum">     271 </span>            : 
+<span class="lineNum">     272 </span>            : 
+<a name="273"><span class="lineNum">     273 </span>            : </a>
+<span class="lineNum">     274 </span>            :         /// Returns a new 'N' dimensional 'Vector' class uniformly distributed within the box
+<span class="lineNum">     275 </span><span class="lineCov">       1208 :         Vector newVector ()</span>
+<span class="lineNum">     276 </span>            :         {
+<span class="lineNum">     277 </span><span class="lineCov">       1208 :             Vector x(N);    /// Dummy constructor if it is a 'std::array'</span>
+<span class="lineNum">     278 </span>            : 
+<span class="lineNum">     279 </span>            :             /// Random value for each dimension
+<span class="lineNum">     280 </span><span class="lineCov">      12238 :             for(int i = 0; i &lt; N; ++i)</span>
+<span class="lineNum">     281 </span><span class="lineCov">      11030 :                 x[i] = randDouble(function.lowerBounds[i], function.upperBounds[i]);</span>
+<span class="lineNum">     282 </span>            : 
+<span class="lineNum">     283 </span><span class="lineCov">       1208 :             return x;</span>
+<span class="lineNum">     284 </span>            :         }
+<span class="lineNum">     285 </span>            : 
+<span class="lineNum">     286 </span>            : 
+<a name="287"><span class="lineNum">     287 </span>            : </a>
+<span class="lineNum">     288 </span>            :         /// Modified differential mutation
+<span class="lineNum">     289 </span><span class="lineCov">    5202245 :         Vector differentialMutation (const Vector&amp; x1, const Vector&amp; x2, const Vector&amp; x3, const Vector&amp; parent)</span>
+<span class="lineNum">     290 </span>            :         {
+<span class="lineNum">     291 </span><span class="lineCov">    5202245 :             Vector child(N);   /// The resulting child</span>
+<span class="lineNum">     292 </span>            : 
+<span class="lineNum">     293 </span><span class="lineCov">    5202245 :             int jRand = randInt(0, N);   /// This component is guaranteed to not get a value from the parent</span>
+<span class="lineNum">     294 </span>            : 
+<span class="lineNum">     295 </span>            : 
+<span class="lineNum">     296 </span>            :             /** It works as follows. With probability 'Cr' or if 'j' == 'jRand', we set the component 'j' 
+<span class="lineNum">     297 </span>            :               * of the child to the modified differential mutation, which is a weighted sum of 'x3[j]', 
+<span class="lineNum">     298 </span>            :               * a factor 'Fa' times the difference between 'best[j]' and 'x2[j]' and a factor 'Fb' times 
+<span class="lineNum">     299 </span>            :               * the  difference between 'parent[j]' and 'x1'. 'Fa' is set to a large value (0.8) while 
+<span class="lineNum">     300 </span>            :               * 'Fb' assumes a small value (0.1). So, the contribution of the best found element is
+<span class="lineNum">     301 </span>            :               * greater than the contribution of the parent, increasing the selective pressure.
+<span class="lineNum">     302 </span>            :             */
+<span class="lineNum">     303 </span><span class="lineCov">   68139020 :             for (int j = 0; j &lt; N; ++j)</span>
+<span class="lineNum">     304 </span>            :             {
+<span class="lineNum">     305 </span><span class="lineCov">   62936775 :                 if (randDouble(0, 1.0) &lt; Cr || j == jRand)</span>
+<span class="lineNum">     306 </span><span class="lineCov">   57164591 :                     child[j] = x3[j] + Fa * (best[j] - x2[j]) + Fb * (parent[j] - x1[j]);</span>
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span>            :                 else
+<span class="lineNum">     309 </span><span class="lineCov">    5772184 :                     child[j] = parent[j];</span>
+<span class="lineNum">     310 </span>            :             }
+<span class="lineNum">     311 </span>            : 
+<span class="lineNum">     312 </span><span class="lineCov">    5202245 :             return child;</span>
+<span class="lineNum">     313 </span>            :         }
+<span class="lineNum">     314 </span>            : 
+<span class="lineNum">     315 </span>            : 
+<a name="316"><span class="lineNum">     316 </span>            : </a>
+<span class="lineNum">     317 </span>            :         /// Checks if the value 'x' is whitin the bounds at position 'i'
+<span class="lineNum">     318 </span><span class="lineCov">   52935817 :         bool withinBounds (double x, int i)</span>
+<span class="lineNum">     319 </span>            :         {
+<span class="lineNum">     320 </span><span class="lineCov">   52935817 :             return (x &gt;= function.lowerBounds[i] &amp;&amp; x &lt;= function.upperBounds[i]);</span>
+<span class="lineNum">     321 </span>            :         }
+<a name="322"><span class="lineNum">     322 </span>            : </a>
+<span class="lineNum">     323 </span>            :         /// Checks if a entire vector is whitin the bounds
+<span class="lineNum">     324 </span><span class="lineCov">     523865 :         bool withinBounds (const Vector&amp; v)</span>
+<span class="lineNum">     325 </span>            :         {
+<span class="lineNum">     326 </span><span class="lineCov">    1760559 :             for(int i = 0; i &lt; N; ++i)</span>
+<span class="lineNum">     327 </span><span class="lineCov">    1237092 :                 if(!withinBounds(v[i], i))</span>
+<span class="lineNum">     328 </span><span class="lineCov">        398 :                     return false;</span>
+<span class="lineNum">     329 </span>            : 
+<span class="lineNum">     330 </span><span class="lineCov">     523467 :             return true;</span>
+<span class="lineNum">     331 </span>            :         }
+<span class="lineNum">     332 </span>            : 
+<span class="lineNum">     333 </span>            : 
+<a name="334"><span class="lineNum">     334 </span>            : </a>
+<span class="lineNum">     335 </span>            :         /// Vector x reached convergence if it is feasible and its fitness is smaller or equal to the optimal value
+<span class="lineNum">     336 </span><span class="lineCov">    1075149 :         inline bool converged (const Vector&amp; x)</span>
+<span class="lineNum">     337 </span>            :         {
+<span class="lineNum">     338 </span><span class="lineCov">    1075149 :             return x.feasible() &amp;&amp; (x.fitness &lt;= function.optimal);</span>
+<span class="lineNum">     339 </span>            :         }
+<span class="lineNum">     340 </span>            : 
+<span class="lineNum">     341 </span>            : 
+<span class="lineNum">     342 </span>            : 
+<span class="lineNum">     343 </span>            :         /// These are the bounds handling functions.
+<a name="344"><span class="lineNum">     344 </span>            : </a>
+<span class="lineNum">     345 </span>            :         /// If a dimension 'i' is outside the box, set the value of this dimension to the value of the parent
+<span class="lineNum">     346 </span><span class="lineCov">    4178430 :         void conservate (Vector&amp; child, const Vector&amp; parent)</span>
+<span class="lineNum">     347 </span>            :         {
+<span class="lineNum">     348 </span><span class="lineCov">   55877155 :             for(int i = 0; i &lt; N; ++i)</span>
+<span class="lineNum">     349 </span><span class="lineCov">   51698725 :                 if(!withinBounds(child[i], i))</span>
+<span class="lineNum">     350 </span><span class="lineCov">    1973834 :                     child[i] = parent[i];</span>
+<span class="lineNum">     351 </span><span class="lineCov">    4178430 :         }</span>
+<a name="352"><span class="lineNum">     352 </span>            : </a>
+<span class="lineNum">     353 </span>            :         /// Clip every dimension 'i' to stay in the range:   lower[i] &lt;= x[i] &lt;= upper[i]
+<span class="lineNum">     354 </span><span class="lineCov">     499950 :         void clip (Vector&amp; child, const Vector&amp;)</span>
+<span class="lineNum">     355 </span>            :         {
+<span class="lineNum">     356 </span><span class="lineCov">   10498950 :             for(int i = 0; i &lt; N; ++i)</span>
+<span class="lineNum">     357 </span><span class="lineCov">    9999000 :                 child[i] = std::min(function.upperBounds[i], std::max(function.lowerBounds[i], child[i]));</span>
+<span class="lineNum">     358 </span><span class="lineCov">     499950 :         }</span>
+<a name="359"><span class="lineNum">     359 </span>            : </a>
+<span class="lineNum">     360 </span>            :         /// If any component is outside the box, generate a new random vector
+<span class="lineNum">     361 </span><span class="lineCov">     523865 :         void reinitialize (Vector&amp; child, const Vector&amp;)</span>
+<span class="lineNum">     362 </span>            :         {
+<span class="lineNum">     363 </span><span class="lineCov">     523865 :             if(!withinBounds(child))</span>
+<span class="lineNum">     364 </span><span class="lineCov">        398 :                 child = newVector();</span>
+<span class="lineNum">     365 </span><span class="lineCov">     523865 :         }</span>
+<span class="lineNum">     366 </span>            : 
+<span class="lineNum">     367 </span>            : 
+<span class="lineNum">     368 </span>            : 
+<span class="lineNum">     369 </span>            :     //private:
+<span class="lineNum">     370 </span>            : 
+<span class="lineNum">     371 </span>            : 
+<span class="lineNum">     372 </span>            :         std::vector&lt;int&gt; permutation;   /// Permutation vector
+<span class="lineNum">     373 </span>            : 
+<span class="lineNum">     374 </span>            :         /// 'std::function' pointing to the bounds handle function
+<span class="lineNum">     375 </span>            :         std::function&lt;void (MDE&lt;FunctionType&gt;*, Vector&amp;, const Vector&amp;)&gt; boundsHandle;
+<span class="lineNum">     376 </span>            : 
+<span class="lineNum">     377 </span>            : 
+<span class="lineNum">     378 </span>            : 
+<span class="lineNum">     379 </span>            :         Population population;   /// Population vector
+<span class="lineNum">     380 </span>            : 
+<span class="lineNum">     381 </span>            :         Vector best;    /// Best element at any time
+<span class="lineNum">     382 </span>            : 
+<span class="lineNum">     383 </span>            :         Function function;   /// Function
+<span class="lineNum">     384 </span>            : 
+<span class="lineNum">     385 </span>            : 
+<span class="lineNum">     386 </span>            :         ::help::RandInt    randInt;      /// Generate a random integer given an interval
+<span class="lineNum">     387 </span>            :         ::help::RandDouble randDouble;   /// Generate a random real given an interval
+<span class="lineNum">     388 </span>            :     };
+<span class="lineNum">     389 </span>            : 
+<span class="lineNum">     390 </span>            : } // namespace de
+<span class="lineNum">     391 </span>            : 
+<span class="lineNum">     392 </span>            : 
+<span class="lineNum">     393 </span>            : #endif //DE_DPS_DE_DPS_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

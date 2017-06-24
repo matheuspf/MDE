@@ -1,0 +1,8 @@
+/home/matheus/Algoritmos/MDE/test/build/CMakeFiles/test.dir
+/home/matheus/Algoritmos/MDE/test/build/CMakeFiles/edit_cache.dir
+/home/matheus/Algoritmos/MDE/test/build/CMakeFiles/rebuild_cache.dir
+/home/matheus/Algoritmos/MDE/test/build/CMakeFiles/MDETests.dir
+/home/matheus/Algoritmos/MDE/test/build/gtest/CMakeFiles/edit_cache.dir
+/home/matheus/Algoritmos/MDE/test/build/gtest/CMakeFiles/rebuild_cache.dir
+/home/matheus/Algoritmos/MDE/test/build/gtest/CMakeFiles/test.dir
+/home/matheus/Algoritmos/MDE/test/build/gtest/CMakeFiles/googletest.dir

@@ -1,0 +1,667 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - libbash test coverage - examples/CEC2006/CEC2006_C_Functions.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">examples/CEC2006</a> - CEC2006_C_Functions.cpp<span style="font-size: 80%;"> (source / <a href="CEC2006_C_Functions.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">libbash test coverage</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">374</td>
+            <td class="headerCovTableEntry">374</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2017-06-24 02:19:11</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /** \file CEC2006_C_Functions.cpp</a>
+<span class="lineNum">       2 </span>            :   *
+<span class="lineNum">       3 </span>            :   * Implementation of the functions defined in CEC2006_C_Functions.h.
+<span class="lineNum">       4 </span>            :   * Again, I don't own this code. It was taken from:
+<span class="lineNum">       5 </span>            :   *
+<span class="lineNum">       6 </span>            :   * http://www.ntu.edu.sg/home/EPNSugan/index_files/CEC-06/CEC06.html
+<span class="lineNum">       7 </span>            :   *
+<span class="lineNum">       8 </span>            :   * For the original paper:
+<span class="lineNum">       9 </span>            :   *
+<span class="lineNum">      10 </span>            :   * http://web.mysites.ntu.edu.sg/epnsugan/PublicSite/Shared%20Documents/CEC-2006/technical_report.pdf
+<span class="lineNum">      11 </span>            : */
+<span class="lineNum">      12 </span>            : 
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : #include &quot;CEC2006_C_Functions.h&quot;
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : namespace mde
+<span class="lineNum">      18 </span>            : {
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            : namespace CEC2006
+<span class="lineNum">      21 </span>            : {
+<a name="22"><span class="lineNum">      22 </span>            : </a>
+<span class="lineNum">      23 </span>            : 
+<span class="lineNum">      24 </span><span class="lineCov">      52915 : void g01 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">      25 </span>            : {
+<span class="lineNum">      26 </span>            :     int j;
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            :     /* objective function */
+<span class="lineNum">      29 </span><span class="lineCov">      52915 :     f[0] = 5.0 * (x[0] + x[1] + x[2] + x[3]) - 5.0 * (x[0] * x[0] + x[1] * x[1] + x[2] * x[2] + x[3] * x[3]);</span>
+<span class="lineNum">      30 </span><span class="lineCov">     529150 :     for (j = 4; j &lt; 13; j++)</span>
+<span class="lineNum">      31 </span><span class="lineCov">     476235 :         f[0] = f[0] - x[j];</span>
+<span class="lineNum">      32 </span>            :     /* constraints g&lt;=0 */
+<span class="lineNum">      33 </span><span class="lineCov">      52915 :     g[0] = 2.0 * x[0] + 2.0 * x[1] + x[9] + x[10] - 10.;</span>
+<span class="lineNum">      34 </span><span class="lineCov">      52915 :     g[1] = 2.0 * x[0] + 2.0 * x[2] + x[9] + x[11] - 10.;</span>
+<span class="lineNum">      35 </span><span class="lineCov">      52915 :     g[2] = 2.0 * x[1] + 2.0 * x[2] + x[10] + x[11] - 10.;</span>
+<span class="lineNum">      36 </span><span class="lineCov">      52915 :     g[3] = -8.0 * x[0] + x[9];</span>
+<span class="lineNum">      37 </span><span class="lineCov">      52915 :     g[4] = -8.0 * x[1] + x[10];</span>
+<span class="lineNum">      38 </span><span class="lineCov">      52915 :     g[5] = -8.0 * x[2] + x[11];</span>
+<span class="lineNum">      39 </span><span class="lineCov">      52915 :     g[6] = -2.0 * x[3] - x[4] + x[9];</span>
+<span class="lineNum">      40 </span><span class="lineCov">      52915 :     g[7] = -2.0 * x[5] - x[6] + x[10];</span>
+<span class="lineNum">      41 </span><span class="lineCov">      52915 :     g[8] = -2.0 * x[7] - x[8] + x[11];</span>
+<a name="42"><span class="lineNum">      42 </span><span class="lineCov">      52915 : }</span></a>
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span><span class="lineCov">    1499940 : void g02 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">      45 </span>            : {
+<span class="lineNum">      46 </span>            :     int j;
+<span class="lineNum">      47 </span>            :     double f1, f2, f3, g1, g2;
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            :     /* objective function */
+<span class="lineNum">      50 </span><span class="lineCov">    1499940 :     f1 = 0.;</span>
+<span class="lineNum">      51 </span><span class="lineCov">    1499940 :     f2 = 1.;</span>
+<span class="lineNum">      52 </span><span class="lineCov">    1499940 :     f3 = 0.;</span>
+<span class="lineNum">      53 </span><span class="lineCov">    1499940 :     g1 = 1.;</span>
+<span class="lineNum">      54 </span><span class="lineCov">    1499940 :     g2 = 0.;</span>
+<span class="lineNum">      55 </span><span class="lineCov">   31498740 :     for (j = 0; j &lt; nx; j++)</span>
+<span class="lineNum">      56 </span>            :     {
+<span class="lineNum">      57 </span><span class="lineCov">   29998800 :         f1 = f1 + pow (cos (x[j]), 4);</span>
+<span class="lineNum">      58 </span><span class="lineCov">   29998800 :         f2 = f2 * cos (x[j]) * cos (x[j]);</span>
+<span class="lineNum">      59 </span><span class="lineCov">   29998800 :         f3 = f3 + ((double) (j + 1)) * x[j] * x[j];</span>
+<span class="lineNum">      60 </span><span class="lineCov">   29998800 :         g1 = g1 * x[j];</span>
+<span class="lineNum">      61 </span><span class="lineCov">   29998800 :         g2 = g2 + x[j];</span>
+<span class="lineNum">      62 </span>            :     }
+<span class="lineNum">      63 </span><span class="lineCov">    1499940 :     f[0] = fabs ((f1 - 2 * f2) / sqrt (f3));</span>
+<span class="lineNum">      64 </span><span class="lineCov">    1499940 :     f[0] = -f[0]; /* Max--&gt;Min, Modified by Jane,Nov 22 2005 */</span>
+<span class="lineNum">      65 </span>            :     /* constraints g&lt;=0 */
+<span class="lineNum">      66 </span><span class="lineCov">    1499940 :     g[0] = 0.75 - g1;</span>
+<span class="lineNum">      67 </span><span class="lineCov">    1499940 :     g[1] = g2 - 7.5 * ((double) nx);</span>
+<a name="68"><span class="lineNum">      68 </span><span class="lineCov">    1499940 : }</span></a>
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span><span class="lineCov">     224375 : void g03 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">      71 </span>            : {
+<span class="lineNum">      72 </span>            :     int j;
+<span class="lineNum">      73 </span><span class="lineCov">     224375 :     double f1, f2, f3 = sqrt ((double) nx);</span>
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            :     /* objective function */
+<span class="lineNum">      76 </span><span class="lineCov">     224375 :     f1 = 1.;</span>
+<span class="lineNum">      77 </span><span class="lineCov">     224375 :     f2 = 0.;</span>
+<span class="lineNum">      78 </span><span class="lineCov">    2468125 :     for (j = 0; j &lt; nx; j++)</span>
+<span class="lineNum">      79 </span>            :     {
+<span class="lineNum">      80 </span><span class="lineCov">    2243750 :         f1 = f3 * f1 * x[j];</span>
+<span class="lineNum">      81 </span><span class="lineCov">    2243750 :         f2 = f2 + x[j] * x[j];</span>
+<span class="lineNum">      82 </span>            :     }
+<span class="lineNum">      83 </span><span class="lineCov">     224375 :     f[0] = f1;</span>
+<span class="lineNum">      84 </span><span class="lineCov">     224375 :     f[0] = -f[0]; /* Max--&gt;Min, Modified by Jane,Nov 22 2005 */</span>
+<span class="lineNum">      85 </span>            :     /* constraints g&lt;=0 */
+<span class="lineNum">      86 </span><span class="lineCov">     224375 :     h[0] = f2 - 1.0;</span>
+<a name="87"><span class="lineNum">      87 </span><span class="lineCov">     224375 : }</span></a>
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span><span class="lineCov">      28395 : void g04 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">      90 </span>            : {
+<span class="lineNum">      91 </span>            :     /* objective function */
+<span class="lineNum">      92 </span><span class="lineCov">      28395 :     f[0] = 5.3578547 * x[2] * x[2] + 0.8356891 * x[0] * x[4] + 37.293239 * x[0] - 40792.141;</span>
+<span class="lineNum">      93 </span>            :     /* constraints g&lt;=0 */
+<span class="lineNum">      94 </span><span class="lineCov">      28395 :     g[0] = 85.334407 + 0.0056858 * x[1] * x[4] + 0.0006262 * x[0] * x[3] - 0.0022053 * x[2] * x[4] - 92.;</span>
+<span class="lineNum">      95 </span><span class="lineCov">      28395 :     g[1] = -85.334407 - 0.0056858 * x[1] * x[4] - 0.0006262 * x[0] * x[3] + 0.0022053 * x[2] * x[4];</span>
+<span class="lineNum">      96 </span><span class="lineCov">      28395 :     g[2] = 80.51249 + 0.0071317 * x[1] * x[4] + 0.0029955 * x[0] * x[1] + 0.0021813 * x[2] * x[2] - 110.;</span>
+<span class="lineNum">      97 </span><span class="lineCov">      28395 :     g[3] = -80.51249 - 0.0071317 * x[1] * x[4] - 0.0029955 * x[0] * x[1] - 0.0021813 * x[2] * x[2] + 90.;</span>
+<span class="lineNum">      98 </span><span class="lineCov">      28395 :     g[4] = 9.300961 + 0.0047026 * x[2] * x[4] + 0.0012547 * x[0] * x[2] + 0.0019085 * x[2] * x[3] - 25.;</span>
+<span class="lineNum">      99 </span><span class="lineCov">      28395 :     g[5] = -9.300961 - 0.0047026 * x[2] * x[4] - 0.0012547 * x[0] * x[2] - 0.0019085 * x[2] * x[3] + 20.;</span>
+<a name="100"><span class="lineNum">     100 </span><span class="lineCov">      28395 : }</span></a>
+<span class="lineNum">     101 </span>            : 
+<span class="lineNum">     102 </span><span class="lineCov">      40990 : void g05 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     103 </span>            : {
+<span class="lineNum">     104 </span>            :     /* objective function */
+<span class="lineNum">     105 </span><span class="lineCov">      40990 :     f[0] = 3.0 * x[0] + 0.000001 * pow (x[0], 3) + 2.0 * x[1] + (0.000002 / 3.0) * pow (x[1], 3);</span>
+<span class="lineNum">     106 </span>            :     /* constraints h=0 =&gt; g=|h|-delta&lt;=0 */
+<span class="lineNum">     107 </span><span class="lineCov">      40990 :     g[0] = -x[3] + x[2] - 0.55;</span>
+<span class="lineNum">     108 </span><span class="lineCov">      40990 :     g[1] = -x[2] + x[3] - 0.55;</span>
+<span class="lineNum">     109 </span><span class="lineCov">      40990 :     h[0] = 1000.0 * sin (-x[2] - 0.25) + 1000.0 * sin (-x[3] - 0.25) + 894.8 - x[0];</span>
+<span class="lineNum">     110 </span><span class="lineCov">      40990 :     h[1] = 1000.0 * sin (x[2] - 0.25) + 1000.0 * sin (x[2] - x[3] - 0.25) + 894.8 - x[1];</span>
+<span class="lineNum">     111 </span><span class="lineCov">      40990 :     h[2] = 1000.0 * sin (x[3] - 0.25) + 1000.0 * sin (x[3] - x[2] - 0.25) + 1294.8;</span>
+<a name="112"><span class="lineNum">     112 </span><span class="lineCov">      40990 : }</span></a>
+<span class="lineNum">     113 </span>            : 
+<span class="lineNum">     114 </span><span class="lineCov">      15205 : void g06 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     115 </span>            : {
+<span class="lineNum">     116 </span>            :     /* objective function */
+<span class="lineNum">     117 </span><span class="lineCov">      15205 :     f[0] = pow ((x[0] - 10.), 3) + pow ((x[1] - 20.), 3);</span>
+<span class="lineNum">     118 </span>            :     /* constraints */
+<span class="lineNum">     119 </span><span class="lineCov">      15205 :     g[0] = 100. - (x[0] - 5.) * (x[0] - 5.) - (x[1] - 5.) * (x[1] - 5.);</span>
+<span class="lineNum">     120 </span><span class="lineCov">      15205 :     g[1] = (x[0] - 6.) * (x[0] - 6.) + (x[1] - 5.) * (x[1] - 5.) - 82.81;</span>
+<a name="121"><span class="lineNum">     121 </span><span class="lineCov">      15205 : }</span></a>
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span><span class="lineCov">    1107020 : void g07 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     124 </span>            : {
+<span class="lineNum">     125 </span>            :     /* objective function */
+<span class="lineNum">     126 </span><span class="lineCov">    1107020 :     f[0] =</span>
+<span class="lineNum">     127 </span><span class="lineCov">    2214040 :             x[0] * x[0] + x[1] * x[1] + x[0] * x[1] - 14.0 * x[0] - 16.0 * x[1] + (x[2] - 10.0) * (x[2] - 10.0) + 4.0 * (x[3] -</span>
+<span class="lineNum">     128 </span><span class="lineCov">    1107020 :                                                                                                                          5.0) *</span>
+<span class="lineNum">     129 </span><span class="lineCov">    3321060 :                                                                                                                   (x[3] - 5.0) + (x[4] - 3.0) * (x[4] - 3.0) + 2.0 * (x[5] - 1.0) * (x[5] - 1.0) + 5.0 * x[6] * x[6] + 7.0 * (x[7] -</span>
+<span class="lineNum">     130 </span><span class="lineCov">    1107020 :                                                                                                                                                                                                                               11) *</span>
+<span class="lineNum">     131 </span><span class="lineCov">    2214040 :                                                                                                                                                                                                                        (x[7] - 11) + 2.0 * (x[8] - 10.0) * (x[8] - 10.0) + (x[9] - 7.0) * (x[9] - 7.0) + 45.;</span>
+<span class="lineNum">     132 </span>            :     /* constraints g&lt;=0 */
+<span class="lineNum">     133 </span><span class="lineCov">    1107020 :     g[0] = -105.0 + 4.0 * x[0] + 5.0 * x[1] - 3.0 * x[6] + 9.0 * x[7];</span>
+<span class="lineNum">     134 </span><span class="lineCov">    1107020 :     g[1] = 10.0 * x[0] - 8.0 * x[1] - 17.0 * x[6] + 2.0 * x[7];</span>
+<span class="lineNum">     135 </span><span class="lineCov">    1107020 :     g[2] = -8.0 * x[0] + 2.0 * x[1] + 5.0 * x[8] - 2.0 * x[9] - 12.0;</span>
+<span class="lineNum">     136 </span><span class="lineCov">    1107020 :     g[3] = 3.0 * (x[0] - 2.0) * (x[0] - 2.0) + 4.0 * (x[1] - 3.0) * (x[1] - 3.0) + 2.0 * x[2] * x[2] - 7.0 * x[3] - 120.0;</span>
+<span class="lineNum">     137 </span><span class="lineCov">    1107020 :     g[4] = 5.0 * x[0] * x[0] + 8.0 * x[1] + (x[2] - 6.0) * (x[2] - 6.0) - 2.0 * x[3] - 40.0;</span>
+<span class="lineNum">     138 </span><span class="lineCov">    1107020 :     g[5] = x[0] * x[0] + 2.0 * (x[1] - 2.0) * (x[1] - 2.0) - 2.0 * x[0] * x[1] + 14.0 * x[4] - 6.0 * x[5];</span>
+<span class="lineNum">     139 </span><span class="lineCov">    1107020 :     g[6] = 0.5 * (x[0] - 8.0) * (x[0] - 8.0) + 2.0 * (x[1] - 4.0) * (x[1] - 4.0) + 3.0 * x[4] * x[4] - x[5] - 30.0;</span>
+<span class="lineNum">     140 </span><span class="lineCov">    1107020 :     g[7] = -3.0 * x[0] + 6.0 * x[1] + 12.0 * (x[8] - 8.0) * (x[8] - 8.0) - 7.0 * x[9];</span>
+<a name="141"><span class="lineNum">     141 </span><span class="lineCov">    1107020 : }</span></a>
+<span class="lineNum">     142 </span>            : 
+<span class="lineNum">     143 </span><span class="lineCov">       2995 : void g08 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     144 </span>            : {
+<span class="lineNum">     145 </span>            : 
+<span class="lineNum">     146 </span><span class="lineCov">       2995 :     double pi = 4.0 * atan (1.0);</span>
+<span class="lineNum">     147 </span>            : 
+<span class="lineNum">     148 </span>            : /* objective function */
+<span class="lineNum">     149 </span><span class="lineCov">       2995 :     f[0] = pow (sin (2 * pi * x[0]), 3) * sin (2 * pi * x[1]) / (pow (x[0], 3) * (x[0] + x[1]));</span>
+<span class="lineNum">     150 </span><span class="lineCov">       2995 :     f[0] = -f[0]; /* Max--&gt;Min, Modified by Jane,Nov 22 2005 */</span>
+<span class="lineNum">     151 </span>            : /* constraints */
+<span class="lineNum">     152 </span><span class="lineCov">       2995 :     g[0] = x[0] * x[0] - x[1] + 1.0;</span>
+<span class="lineNum">     153 </span><span class="lineCov">       2995 :     g[1] = 1.0 - x[0] + (x[1] - 4.0) * (x[1] - 4.0);</span>
+<a name="154"><span class="lineNum">     154 </span><span class="lineCov">       2995 : }</span></a>
+<span class="lineNum">     155 </span>            : 
+<span class="lineNum">     156 </span><span class="lineCov">      47515 : void g09 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     157 </span>            : {
+<span class="lineNum">     158 </span>            :     /* objective function */
+<span class="lineNum">     159 </span><span class="lineCov">      47515 :     f[0] =</span>
+<span class="lineNum">     160 </span><span class="lineCov">      47515 :             (x[0] - 10.0) * (x[0] - 10.0) + 5.0 * (x[1] - 12.0) * (x[1] - 12.0) + pow (x[2],</span>
+<span class="lineNum">     161 </span><span class="lineCov">      47515 :                                                                                        4) + 3.0 * (x[3] - 11.0) * (x[3] -</span>
+<span class="lineNum">     162 </span><span class="lineCov">      47515 :                                                                                                                    11.0) +</span>
+<span class="lineNum">     163 </span><span class="lineCov">      95030 :             10.0 * pow (x[4], 6) + 7.0 * x[5] * x[5] + pow (x[6], 4) - 4.0 * x[5] * x[6] - 10.0 * x[5] - 8.0 * x[6];</span>
+<span class="lineNum">     164 </span>            :     /* constraints g&lt;=0 */
+<span class="lineNum">     165 </span><span class="lineCov">      47515 :     g[0] = -127.0 + 2 * x[0] * x[0] + 3.0 * pow (x[1], 4) + x[2] + 4.0 * x[3] * x[3] + 5.0 * x[4];</span>
+<span class="lineNum">     166 </span><span class="lineCov">      47515 :     g[1] = -282.0 + 7.0 * x[0] + 3.0 * x[1] + 10.0 * x[2] * x[2] + x[3] - x[4];</span>
+<span class="lineNum">     167 </span><span class="lineCov">      47515 :     g[2] = -196.0 + 23.0 * x[0] + x[1] * x[1] + 6.0 * x[5] * x[5] - 8.0 * x[6];</span>
+<span class="lineNum">     168 </span><span class="lineCov">      47515 :     g[3] = 4.0 * x[0] * x[0] + x[1] * x[1] - 3.0 * x[0] * x[1] + 2.0 * x[2] * x[2] + 5.0 * x[5] - 11.0 * x[6];</span>
+<a name="169"><span class="lineNum">     169 </span><span class="lineCov">      47515 : }</span></a>
+<span class="lineNum">     170 </span>            : 
+<span class="lineNum">     171 </span><span class="lineCov">     980095 : void g10 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     172 </span>            : {
+<span class="lineNum">     173 </span>            :     /* objective function */
+<span class="lineNum">     174 </span><span class="lineCov">     980095 :     f[0] = x[0] + x[1] + x[2];</span>
+<span class="lineNum">     175 </span>            :     /* constraints g&lt;=0 */
+<span class="lineNum">     176 </span><span class="lineCov">     980095 :     g[0] = -1.0 + 0.0025 * (x[3] + x[5]);</span>
+<span class="lineNum">     177 </span><span class="lineCov">     980095 :     g[1] = -1.0 + 0.0025 * (x[4] + x[6] - x[3]);</span>
+<span class="lineNum">     178 </span><span class="lineCov">     980095 :     g[2] = -1.0 + 0.01 * (x[7] - x[4]);</span>
+<span class="lineNum">     179 </span><span class="lineCov">     980095 :     g[3] = -x[0] * x[5] + 833.33252 * x[3] + 100.0 * x[0] - 83333.333;</span>
+<span class="lineNum">     180 </span><span class="lineCov">     980095 :     g[4] = -x[1] * x[6] + 1250.0 * x[4] + x[1] * x[3] - 1250.0 * x[3];</span>
+<span class="lineNum">     181 </span><span class="lineCov">     980095 :     g[5] = -x[2] * x[7] + 1250000.0 + x[2] * x[4] - 2500.0 * x[4];</span>
+<a name="182"><span class="lineNum">     182 </span><span class="lineCov">     980095 : }</span></a>
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span><span class="lineCov">      10235 : void g11 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     185 </span>            : {
+<span class="lineNum">     186 </span>            :     /* objective function */
+<span class="lineNum">     187 </span><span class="lineCov">      10235 :     f[0] = x[0] * x[0] + (x[1] - 1.0) * (x[1] - 1.0);</span>
+<span class="lineNum">     188 </span>            :     /* constraints g&lt;=0 */
+<span class="lineNum">     189 </span><span class="lineCov">      10235 :     h[0] = x[1] - x[0] * x[0];</span>
+<a name="190"><span class="lineNum">     190 </span><span class="lineCov">      10235 : }</span></a>
+<span class="lineNum">     191 </span>            : 
+<span class="lineNum">     192 </span><span class="lineCov">       5690 : void g12 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     193 </span>            : {
+<span class="lineNum">     194 </span>            :     double gt;
+<span class="lineNum">     195 </span>            :     int i, j, k;
+<span class="lineNum">     196 </span>            : 
+<span class="lineNum">     197 </span>            : /* objective function */
+<span class="lineNum">     198 </span><span class="lineCov">       5690 :     f[0] = (100. - (x[0] - 5.) * (x[0] - 5.) - (x[1] - 5.) * (x[1] - 5.) - (x[2] - 5.) * (x[2] - 5.)) / 100.;</span>
+<span class="lineNum">     199 </span><span class="lineCov">       5690 :     f[0] = -f[0]; /* Max--&gt;Min, Modified by Jane,Nov 22 2005 */</span>
+<span class="lineNum">     200 </span>            : /* constraints */
+<span class="lineNum">     201 </span><span class="lineCov">       5690 :     g[0] = (x[0] - 1.) * (x[0] - 1.) + (x[1] - 1.) * (x[1] - 1.) + (x[2] - 1.) * (x[2] - 1.) - 0.0625;</span>
+<span class="lineNum">     202 </span><span class="lineCov">      56900 :     for (i = 1; i &lt;= 9; i++)</span>
+<span class="lineNum">     203 </span>            :     {
+<span class="lineNum">     204 </span><span class="lineCov">     512100 :         for (j = 1; j &lt;= 9; j++)</span>
+<span class="lineNum">     205 </span>            :         {
+<span class="lineNum">     206 </span><span class="lineCov">    4608900 :             for (k = 1; k &lt;= 9; k++)</span>
+<span class="lineNum">     207 </span>            :             {
+<span class="lineNum">     208 </span><span class="lineCov">    4148010 :                 gt = (x[0] - i) * (x[0] - i) + (x[1] - j) * (x[1] - j) + (x[2] - k) * (x[2] - k) - 0.0625;</span>
+<span class="lineNum">     209 </span><span class="lineCov">    4148010 :                 if (gt &lt; g[0])</span>
+<span class="lineNum">     210 </span><span class="lineCov">     174408 :                     g[0] = gt;</span>
+<span class="lineNum">     211 </span>            :             }
+<span class="lineNum">     212 </span>            :         }
+<span class="lineNum">     213 </span>            :     }
+<a name="214"><span class="lineNum">     214 </span><span class="lineCov">       5690 : }</span></a>
+<span class="lineNum">     215 </span>            : 
+<span class="lineNum">     216 </span><span class="lineCov">     628305 : void g13 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     217 </span>            : {
+<span class="lineNum">     218 </span>            :     /* objective function */
+<span class="lineNum">     219 </span><span class="lineCov">     628305 :     f[0] = exp (x[0] * x[1] * x[2] * x[3] * x[4]);</span>
+<span class="lineNum">     220 </span>            :     /* constraints h(x) = 0 */
+<span class="lineNum">     221 </span><span class="lineCov">     628305 :     h[0] = x[0] * x[0] + x[1] * x[1] + x[2] * x[2] + x[3] * x[3] + x[4] * x[4] - 10.0;</span>
+<span class="lineNum">     222 </span><span class="lineCov">     628305 :     h[1] = x[1] * x[2] - 5.0 * x[3] * x[4];</span>
+<span class="lineNum">     223 </span><span class="lineCov">     628305 :     h[2] = pow (x[0], 3) + pow (x[1], 3) + 1.0;</span>
+<a name="224"><span class="lineNum">     224 </span><span class="lineCov">     628305 : }</span></a>
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span><span class="lineCov">    1499940 : void g14 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     227 </span>            : {
+<span class="lineNum">     228 </span>            :     int i;
+<span class="lineNum">     229 </span><span class="lineCov">    1499940 :     double sumlog = 0.0, sum = 0.0;</span>
+<span class="lineNum">     230 </span><span class="lineCov">    1499940 :     double C[10] = { -6.089, -17.164, -34.054, -5.914, -24.721, -14.986, -24.100, -10.708, -26.662, -22.179 };</span>
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span>            :     /* objective function */
+<span class="lineNum">     233 </span><span class="lineCov">   16499340 :     for (i = 0; i &lt; 10; i++)</span>
+<span class="lineNum">     234 </span><span class="lineCov">   14999400 :         sumlog += x[i];</span>
+<span class="lineNum">     235 </span><span class="lineCov">   16499340 :     for (i = 0; i &lt; 10; i++)</span>
+<span class="lineNum">     236 </span><span class="lineCov">   14999400 :         sum += x[i] * (C[i] + log (x[i] / sumlog));</span>
+<span class="lineNum">     237 </span><span class="lineCov">    1499940 :     f[0] = sum;</span>
+<span class="lineNum">     238 </span>            :     /* constraints h=0 */
+<span class="lineNum">     239 </span><span class="lineCov">    1499940 :     h[0] = x[0] + 2.0 * x[1] + 2.0 * x[2] + x[5] + x[9] - 2.0;</span>
+<span class="lineNum">     240 </span><span class="lineCov">    1499940 :     h[1] = x[3] + 2.0 * x[4] + x[5] + x[6] - 1.0;</span>
+<span class="lineNum">     241 </span><span class="lineCov">    1499940 :     h[2] = x[2] + x[6] + x[7] + 2.0 * x[8] + x[9] - 1.0;</span>
+<a name="242"><span class="lineNum">     242 </span><span class="lineCov">    1499940 : }</span></a>
+<span class="lineNum">     243 </span>            : 
+<span class="lineNum">     244 </span><span class="lineCov">      91905 : void g15 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     245 </span>            : {
+<span class="lineNum">     246 </span>            :     /* objective function */
+<span class="lineNum">     247 </span><span class="lineCov">      91905 :     f[0] = 1000.0 - pow (x[0], 2.0) - 2.0 * x[1] * x[1] - x[2] * x[2] - x[0] * x[1] - x[0] * x[2];</span>
+<span class="lineNum">     248 </span>            :     /* constraints h=0 */
+<span class="lineNum">     249 </span><span class="lineCov">      91905 :     h[0] = pow (x[0], 2.0) + pow (x[1], 2.0) + pow (x[2], 2.0) - 25.0;</span>
+<span class="lineNum">     250 </span><span class="lineCov">      91905 :     h[1] = 8.0 * x[0] + 14.0 * x[1] + 7.0 * x[2] - 56.0; /* BUG FIXED was 8.0 * x[1] */</span>
+<a name="251"><span class="lineNum">     251 </span><span class="lineCov">      91905 : }</span></a>
+<span class="lineNum">     252 </span>            : 
+<span class="lineNum">     253 </span><span class="lineCov">      20455 : void g16 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     254 </span>            : {
+<span class="lineNum">     255 </span>            :     double x1, x2, x3, x4, x5;
+<span class="lineNum">     256 </span>            :     double C[17], Y[17];
+<span class="lineNum">     257 </span>            : 
+<span class="lineNum">     258 </span><span class="lineCov">      20455 :     x1 = x[0];</span>
+<span class="lineNum">     259 </span><span class="lineCov">      20455 :     x2 = x[1];</span>
+<span class="lineNum">     260 </span><span class="lineCov">      20455 :     x3 = x[2];</span>
+<span class="lineNum">     261 </span><span class="lineCov">      20455 :     x4 = x[3];</span>
+<span class="lineNum">     262 </span><span class="lineCov">      20455 :     x5 = x[4];</span>
+<span class="lineNum">     263 </span>            : 
+<span class="lineNum">     264 </span><span class="lineCov">      20455 :     Y[0] = x2 + x3 + 41.6;</span>
+<span class="lineNum">     265 </span><span class="lineCov">      20455 :     C[0] = 0.024 * x4 - 4.62;</span>
+<span class="lineNum">     266 </span><span class="lineCov">      20455 :     Y[1] = (12.5 / C[0]) + 12.0;</span>
+<span class="lineNum">     267 </span><span class="lineCov">      20455 :     C[1] = 0.0003535 * pow (x1, 2.0) + 0.5311 * x1 + 0.08705 * Y[1] * x1;</span>
+<span class="lineNum">     268 </span><span class="lineCov">      20455 :     C[2] = 0.052 * x1 + 78.0 + 0.002377 * Y[1] * x1;</span>
+<span class="lineNum">     269 </span><span class="lineCov">      20455 :     Y[2] = C[1] / C[2];</span>
+<span class="lineNum">     270 </span><span class="lineCov">      20455 :     Y[3] = 19.0 * Y[2];</span>
+<span class="lineNum">     271 </span><span class="lineCov">      20455 :     C[3] = 0.04782 * (x1 - Y[2]) + ((0.1956 * pow (x1 - Y[2], 2.0)) / x2) + 0.6376 * Y[3] + 1.594 * Y[2];</span>
+<span class="lineNum">     272 </span><span class="lineCov">      20455 :     C[4] = 100 * x2;</span>
+<span class="lineNum">     273 </span><span class="lineCov">      20455 :     C[5] = x1 - Y[2] - Y[3];</span>
+<span class="lineNum">     274 </span><span class="lineCov">      20455 :     C[6] = 0.950 - (C[3] / C[4]);</span>
+<span class="lineNum">     275 </span><span class="lineCov">      20455 :     Y[4] = C[5] * C[6];</span>
+<span class="lineNum">     276 </span><span class="lineCov">      20455 :     Y[5] = x1 - Y[4] - Y[3] - Y[2];</span>
+<span class="lineNum">     277 </span><span class="lineCov">      20455 :     C[7] = (Y[4] + Y[3]) * 0.995;</span>
+<span class="lineNum">     278 </span><span class="lineCov">      20455 :     Y[6] = C[7] / Y[0];</span>
+<span class="lineNum">     279 </span><span class="lineCov">      20455 :     Y[7] = C[7] / 3798.0;</span>
+<span class="lineNum">     280 </span><span class="lineCov">      20455 :     C[8] = Y[6] - (0.0663 * Y[6] / Y[7]) - 0.3153;</span>
+<span class="lineNum">     281 </span><span class="lineCov">      20455 :     Y[8] = (96.82 / C[8]) + 0.321 * Y[0];</span>
+<span class="lineNum">     282 </span><span class="lineCov">      20455 :     Y[9] = 1.29 * Y[4] + 1.258 * Y[3] + 2.29 * Y[2] + 1.71 * Y[5];</span>
+<span class="lineNum">     283 </span><span class="lineCov">      20455 :     Y[10] = 1.71 * x1 - 0.452 * Y[3] + 0.580 * Y[2];</span>
+<span class="lineNum">     284 </span><span class="lineCov">      20455 :     C[9] = 12.3 / 752.3;</span>
+<span class="lineNum">     285 </span><span class="lineCov">      20455 :     C[10] = 1.75 * Y[1] * 0.995 * x1;</span>
+<span class="lineNum">     286 </span><span class="lineCov">      20455 :     C[11] = 0.995 * Y[9] + 1998.0;</span>
+<span class="lineNum">     287 </span><span class="lineCov">      20455 :     Y[11] = C[9] * x1 + (C[10] / C[11]);</span>
+<span class="lineNum">     288 </span><span class="lineCov">      20455 :     Y[12] = C[11] - 1.75 * Y[1];</span>
+<span class="lineNum">     289 </span><span class="lineCov">      20455 :     Y[13] = 3623.0 + 64.4 * x2 + 58.4 * x3 + (146312.0 / (Y[8] + x5));</span>
+<span class="lineNum">     290 </span><span class="lineCov">      20455 :     C[12] = 0.995 * Y[9] + 60.8 * x2 + 48 * x4 - 0.1121 * Y[13] - 5095.0;</span>
+<span class="lineNum">     291 </span><span class="lineCov">      20455 :     Y[14] = Y[12] / C[12];</span>
+<span class="lineNum">     292 </span><span class="lineCov">      20455 :     Y[15] = 148000.0 - 331000.0 * Y[14] + 40.0 * Y[12] - 61.0 * Y[14] * Y[12];</span>
+<span class="lineNum">     293 </span><span class="lineCov">      20455 :     C[13] = 2324 * Y[9] - 28740000 * Y[1];</span>
+<span class="lineNum">     294 </span><span class="lineCov">      20455 :     Y[16] = 14130000 - 1328.0 * Y[9] - 531.0 * Y[10] + (C[13] / C[11]);</span>
+<span class="lineNum">     295 </span><span class="lineCov">      20455 :     C[14] = (Y[12] / Y[14]) - (Y[12] / 0.52);</span>
+<span class="lineNum">     296 </span><span class="lineCov">      20455 :     C[15] = 1.104 - 0.72 * Y[14];</span>
+<span class="lineNum">     297 </span><span class="lineCov">      20455 :     C[16] = Y[8] + x5;</span>
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span>            :     /* objective function */
+<span class="lineNum">     300 </span><span class="lineCov">      20455 :     f[0] = 0.0000005843 * Y[16] - 0.000117 * Y[13] - 0.1365 - 0.00002358 * Y[12] - 0.000001502 * Y[15] - 0.0321 * Y[11] - 0.004324 * Y[4] - 0.0001 * (C[14] / C[15]) - 37.48 * (Y[1] / C[11]);</span>
+<span class="lineNum">     301 </span><span class="lineCov">      20455 :     f[0] = -f[0]; /* Max--&gt;Min, Modified by Jane,Nov 22 2005 */</span>
+<span class="lineNum">     302 </span>            :     /* constraints g(x) &lt;= 0 */
+<span class="lineNum">     303 </span><span class="lineCov">      20455 :     g[0] = -Y[3] + (0.28 / 0.72) * Y[4];</span>
+<span class="lineNum">     304 </span><span class="lineCov">      20455 :     g[1] = -1.5 * x2 + x3;</span>
+<span class="lineNum">     305 </span><span class="lineCov">      20455 :     g[2] = -21.0 + 3496.0 * (Y[1] / C[11]);</span>
+<span class="lineNum">     306 </span><span class="lineCov">      20455 :     g[3] = -(62212.0 / C[16]) + 110.6 + Y[0];</span>
+<span class="lineNum">     307 </span><span class="lineCov">      20455 :     g[4] = 213.1 - Y[0];</span>
+<span class="lineNum">     308 </span><span class="lineCov">      20455 :     g[5] = Y[0] - 405.23;</span>
+<span class="lineNum">     309 </span><span class="lineCov">      20455 :     g[6] = 17.505 - Y[1];</span>
+<span class="lineNum">     310 </span><span class="lineCov">      20455 :     g[7] = Y[1] - 1053.6667;</span>
+<span class="lineNum">     311 </span><span class="lineCov">      20455 :     g[8] = 11.275 - Y[2];</span>
+<span class="lineNum">     312 </span><span class="lineCov">      20455 :     g[9] = Y[2] - 35.03;</span>
+<span class="lineNum">     313 </span><span class="lineCov">      20455 :     g[10] = 214.228 - Y[3];</span>
+<span class="lineNum">     314 </span><span class="lineCov">      20455 :     g[11] = Y[3] - 665.585;</span>
+<span class="lineNum">     315 </span><span class="lineCov">      20455 :     g[12] = 7.458 - Y[4];</span>
+<span class="lineNum">     316 </span><span class="lineCov">      20455 :     g[13] = Y[4] - 584.463;</span>
+<span class="lineNum">     317 </span><span class="lineCov">      20455 :     g[14] = 0.961 - Y[5];</span>
+<span class="lineNum">     318 </span><span class="lineCov">      20455 :     g[15] = Y[5] - 265.916;</span>
+<span class="lineNum">     319 </span><span class="lineCov">      20455 :     g[16] = 1.612 - Y[6];</span>
+<span class="lineNum">     320 </span><span class="lineCov">      20455 :     g[17] = Y[6] - 7.046;</span>
+<span class="lineNum">     321 </span><span class="lineCov">      20455 :     g[18] = 0.146 - Y[7];</span>
+<span class="lineNum">     322 </span><span class="lineCov">      20455 :     g[19] = Y[7] - 0.222;</span>
+<span class="lineNum">     323 </span><span class="lineCov">      20455 :     g[20] = 107.99 - Y[8];</span>
+<span class="lineNum">     324 </span><span class="lineCov">      20455 :     g[21] = Y[8] - 273.366;</span>
+<span class="lineNum">     325 </span><span class="lineCov">      20455 :     g[22] = 922.693 - Y[9];</span>
+<span class="lineNum">     326 </span><span class="lineCov">      20455 :     g[23] = Y[9] - 1286.105;</span>
+<span class="lineNum">     327 </span><span class="lineCov">      20455 :     g[24] = 926.832 - Y[10];</span>
+<span class="lineNum">     328 </span><span class="lineCov">      20455 :     g[25] = Y[10] - 1444.046;</span>
+<span class="lineNum">     329 </span><span class="lineCov">      20455 :     g[26] = 18.766 - Y[11];</span>
+<span class="lineNum">     330 </span><span class="lineCov">      20455 :     g[27] = Y[11] - 537.141;</span>
+<span class="lineNum">     331 </span><span class="lineCov">      20455 :     g[28] = 1072.163 - Y[12];</span>
+<span class="lineNum">     332 </span><span class="lineCov">      20455 :     g[29] = Y[12] - 3247.039;</span>
+<span class="lineNum">     333 </span><span class="lineCov">      20455 :     g[30] = 8961.448 - Y[13];</span>
+<span class="lineNum">     334 </span><span class="lineCov">      20455 :     g[31] = Y[13] - 26844.086;</span>
+<span class="lineNum">     335 </span><span class="lineCov">      20455 :     g[32] = 0.063 - Y[14];</span>
+<span class="lineNum">     336 </span><span class="lineCov">      20455 :     g[33] = Y[14] - 0.386;</span>
+<span class="lineNum">     337 </span><span class="lineCov">      20455 :     g[34] = 71084.33 - Y[15];</span>
+<span class="lineNum">     338 </span><span class="lineCov">      20455 :     g[35] = Y[15] - 140000.0;</span>
+<span class="lineNum">     339 </span><span class="lineCov">      20455 :     g[36] = 2802713.0 - Y[16];</span>
+<span class="lineNum">     340 </span><span class="lineCov">      20455 :     g[37] = Y[16] - 12146108.0;</span>
+<a name="341"><span class="lineNum">     341 </span><span class="lineCov">      20455 : }</span></a>
+<span class="lineNum">     342 </span>            : 
+<span class="lineNum">     343 </span><span class="lineCov">    1150285 : void g17 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     344 </span>            : {
+<span class="lineNum">     345 </span>            :     double f1, f2, x1, x2, x3, x4, x5, x6;
+<span class="lineNum">     346 </span>            :     double aux1, aux2, aux5, aux4;
+<span class="lineNum">     347 </span>            : 
+<span class="lineNum">     348 </span><span class="lineCov">    1150285 :     x1 = x[0];</span>
+<span class="lineNum">     349 </span><span class="lineCov">    1150285 :     x2 = x[1];</span>
+<span class="lineNum">     350 </span><span class="lineCov">    1150285 :     x3 = x[2];</span>
+<span class="lineNum">     351 </span><span class="lineCov">    1150285 :     x4 = x[3];</span>
+<span class="lineNum">     352 </span><span class="lineCov">    1150285 :     x5 = x[4];</span>
+<span class="lineNum">     353 </span><span class="lineCov">    1150285 :     x6 = x[5];</span>
+<span class="lineNum">     354 </span>            : 
+<span class="lineNum">     355 </span><span class="lineCov">    1150285 :     aux1 = 300.0 - (((x3 * x4) * cos (1.48477 - x6)) - ((0.90798 * pow (x3, 2.0)) * cos (1.47588))) / 131.078;</span>
+<span class="lineNum">     356 </span><span class="lineCov">    1150285 :     aux2 = -(((x3 * x4)  * cos (1.48477 + x6)) - ((0.90798 * pow (x4, 2.0))  * cos (1.47588)))/ 131.078;</span>
+<span class="lineNum">     357 </span><span class="lineCov">    1150285 :     aux5 = -(((x3 * x4)  * sin (1.48477 + x6)) - ((0.90798 * pow (x4, 2.0))  * sin (1.47588)))/ 131.078;</span>
+<span class="lineNum">     358 </span><span class="lineCov">    1150285 :     aux4 = 200.0 - (((x3 * x4)  * sin (1.48477 - x6)) - ((0.90798 * pow (x3, 2.0))  * sin (1.47588)))/ 131.078;</span>
+<span class="lineNum">     359 </span>            : 
+<span class="lineNum">     360 </span>            : 
+<span class="lineNum">     361 </span>            :     /* objective fucntion */
+<span class="lineNum">     362 </span><span class="lineCov">    1150285 :     if (x1 &gt;= 0.0 &amp;&amp; x1 &lt; 300.0)</span>
+<span class="lineNum">     363 </span>            :     {
+<span class="lineNum">     364 </span><span class="lineCov">    1149972 :         f1 = 30.0 * aux1;</span>
+<span class="lineNum">     365 </span>            :     }
+<span class="lineNum">     366 </span>            :     else
+<span class="lineNum">     367 </span>            :     {
+<span class="lineNum">     368 </span><span class="lineCov">        313 :         if (x1 &gt;= 300.0 &amp;&amp; x1 &lt;= 400.0)</span>
+<span class="lineNum">     369 </span>            :         {
+<span class="lineNum">     370 </span><span class="lineCov">        313 :             f1 = 31.0 * aux1;</span>
+<span class="lineNum">     371 </span>            :         }
+<span class="lineNum">     372 </span>            :     }
+<span class="lineNum">     373 </span><span class="lineCov">    1150285 :     if (x2 &gt;= 0.0 &amp;&amp; x2 &lt; 100.0)</span>
+<span class="lineNum">     374 </span>            :     {
+<span class="lineNum">     375 </span><span class="lineCov">     137574 :         f2 = 28.0 * aux2;</span>
+<span class="lineNum">     376 </span>            :     }
+<span class="lineNum">     377 </span>            :     else
+<span class="lineNum">     378 </span>            :     {
+<span class="lineNum">     379 </span><span class="lineCov">    1012711 :         if (x2 &gt;= 100.0 &amp;&amp; x2 &lt; 200.0)</span>
+<span class="lineNum">     380 </span>            :         {
+<span class="lineNum">     381 </span><span class="lineCov">    1005315 :             f2 = 29.0 * aux2;</span>
+<span class="lineNum">     382 </span>            :         }
+<span class="lineNum">     383 </span>            :         else
+<span class="lineNum">     384 </span>            :         {
+<span class="lineNum">     385 </span><span class="lineCov">       7396 :             if (x2 &gt;= 200.0 &amp;&amp; x2 &lt;= 1000.0)</span>
+<span class="lineNum">     386 </span>            :             {
+<span class="lineNum">     387 </span><span class="lineCov">       7396 :                 f2 = 30.0 * aux2;</span>
+<span class="lineNum">     388 </span>            :             }
+<span class="lineNum">     389 </span>            :         }
+<span class="lineNum">     390 </span>            :     }
+<span class="lineNum">     391 </span><span class="lineCov">    1150285 :     f[0] = f1 + f2;</span>
+<span class="lineNum">     392 </span>            : 
+<span class="lineNum">     393 </span>            :     /* constraint function h = 0 */
+<span class="lineNum">     394 </span><span class="lineCov">    1150285 :     h[0] = aux1 - x1;</span>
+<span class="lineNum">     395 </span><span class="lineCov">    1150285 :     h[1] = aux2 - x2;</span>
+<span class="lineNum">     396 </span><span class="lineCov">    1150285 :     h[2] = aux5 - x5;</span>
+<span class="lineNum">     397 </span><span class="lineCov">    1150285 :     h[3] = aux4;</span>
+<a name="398"><span class="lineNum">     398 </span><span class="lineCov">    1150285 : }</span></a>
+<span class="lineNum">     399 </span>            : 
+<span class="lineNum">     400 </span><span class="lineCov">     556530 : void g18 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     401 </span>            : {
+<span class="lineNum">     402 </span>            :     /* objective function */
+<span class="lineNum">     403 </span><span class="lineCov">     556530 :     f[0] = 0.5 * (x[0] * x[3] - x[1] * x[2] + x[2] * x[8] - x[4] * x[8] + x[4] * x[7] - x[5] * x[6]);</span>
+<span class="lineNum">     404 </span><span class="lineCov">     556530 :     f[0] = -f[0]; /* Max--&gt;Min, Modified by Jane,Nov 22 2005 */</span>
+<span class="lineNum">     405 </span>            :     /* constraint function g &lt;= 0 */
+<span class="lineNum">     406 </span><span class="lineCov">     556530 :     g[0] = -1.0 + pow (x[2], 2.0) + pow (x[3], 2.0);</span>
+<span class="lineNum">     407 </span><span class="lineCov">     556530 :     g[1] = -1.0 + pow (x[8], 2.0);</span>
+<span class="lineNum">     408 </span><span class="lineCov">     556530 :     g[2] = -1.0 + pow (x[4], 2.0) + pow (x[5], 2.0);</span>
+<span class="lineNum">     409 </span><span class="lineCov">     556530 :     g[3] = -1.0 + pow (x[0], 2.0) + pow (x[1] - x[8], 2.0);</span>
+<span class="lineNum">     410 </span><span class="lineCov">     556530 :     g[4] = -1.0 + pow (x[0] - x[4], 2.0) + pow (x[1] - x[5], 2.0);</span>
+<span class="lineNum">     411 </span><span class="lineCov">     556530 :     g[5] = -1.0 + pow (x[0] - x[6], 2.0) + pow (x[1] - x[7], 2.0);</span>
+<span class="lineNum">     412 </span><span class="lineCov">     556530 :     g[6] = -1.0 + pow (x[2] - x[4], 2.0) + pow (x[3] - x[5], 2.0);</span>
+<span class="lineNum">     413 </span><span class="lineCov">     556530 :     g[7] = -1.0 + pow (x[2] - x[6], 2.0) + pow (x[3] - x[7], 2.0);</span>
+<span class="lineNum">     414 </span><span class="lineCov">     556530 :     g[8] = -1.0 + pow (x[6], 2.0) + pow (x[7] - x[8], 2.0);/* bug fixed by Jane,Nov 25 2005 */</span>
+<span class="lineNum">     415 </span><span class="lineCov">     556530 :     g[9] = -x[0] * x[3] + x[1] * x[2];</span>
+<span class="lineNum">     416 </span><span class="lineCov">     556530 :     g[10] = -x[2] * x[8];</span>
+<span class="lineNum">     417 </span><span class="lineCov">     556530 :     g[11] = x[4] * x[8];</span>
+<span class="lineNum">     418 </span><span class="lineCov">     556530 :     g[12] = -x[4] * x[7] + x[5] * x[6];</span>
+<a name="419"><span class="lineNum">     419 </span><span class="lineCov">     556530 : }</span></a>
+<span class="lineNum">     420 </span>            : 
+<span class="lineNum">     421 </span><span class="lineCov">    1499940 : void g19 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     422 </span>            : {
+<span class="lineNum">     423 </span>            :     int i, j;
+<span class="lineNum">     424 </span><span class="lineCov">    1499940 :     double sum1 = 0.0, sum2 = 0.0, sum3 = 0.0;</span>
+<span class="lineNum">     425 </span>            :     double A[10][5] = { -16.0, 2.0, 0.0, 1.0, 0.0,
+<span class="lineNum">     426 </span>            :                         0.0, -2.0, 0.0, 0.4, 2.0,
+<span class="lineNum">     427 </span>            :                         -3.5, 0.0, 2.0, 0.0, 0.0,
+<span class="lineNum">     428 </span>            :                         0.0, -2.0, 0.0, -4.0, -1.0,
+<span class="lineNum">     429 </span>            :                         0.0, -9.0, -2.0, 1.0, -2.8,
+<span class="lineNum">     430 </span>            :                         2.0, 0.0, -4.0, 0.0, 0.0,
+<span class="lineNum">     431 </span>            :                         -1.0, -1.0, -1.0, -1.0, -1.0,
+<span class="lineNum">     432 </span>            :                         -1.0, -2.0, -3.0, -2.0, -1.0,
+<span class="lineNum">     433 </span>            :                         1.0, 2.0, 3.0, 4.0, 5.0,
+<span class="lineNum">     434 </span>            :                         1.0, 1.0, 1.0, 1.0, 1.0
+<span class="lineNum">     435 </span><span class="lineCov">    1499940 :     };</span>
+<span class="lineNum">     436 </span><span class="lineCov">    1499940 :     double B[10] = { -40.0, -2.0, -0.25, -4.0, -4.0, -1.0, -40.0, -60.0, 5.0, 1.0 };</span>
+<span class="lineNum">     437 </span>            :     double C[5][5] = { 30.0, -20.0, -10.0, 32.0, -10.0,
+<span class="lineNum">     438 </span>            :                        -20.0, 39.0, -6.0, -31.0, 32.0,
+<span class="lineNum">     439 </span>            :                        -10.0, -6.0, 10.0, -6.0, -10.0,
+<span class="lineNum">     440 </span>            :                        32.0, -31.0, -6.0, 39.0, -20.0,
+<span class="lineNum">     441 </span>            :                        -10.0, 32.0, -10.0, -20.0, 30.0
+<span class="lineNum">     442 </span><span class="lineCov">    1499940 :     };</span>
+<span class="lineNum">     443 </span><span class="lineCov">    1499940 :     double D[5] = { 4.0, 8.0, 10.0, 6.0, 2.0 };</span>
+<span class="lineNum">     444 </span><span class="lineCov">    1499940 :     double E[5] = { -15.0, -27.0, -36.0, -18.0, -12.0 };</span>
+<span class="lineNum">     445 </span>            : 
+<span class="lineNum">     446 </span>            :     /* objective function */
+<span class="lineNum">     447 </span><span class="lineCov">   16499340 :     for (i = 0; i &lt; 10; i++)</span>
+<span class="lineNum">     448 </span>            :     {
+<span class="lineNum">     449 </span><span class="lineCov">   14999400 :         sum1 += B[i] * x[i];</span>
+<span class="lineNum">     450 </span>            :     }
+<span class="lineNum">     451 </span><span class="lineCov">    8999640 :     for (i = 0; i &lt; 5; i++)</span>
+<span class="lineNum">     452 </span>            :     {
+<span class="lineNum">     453 </span><span class="lineCov">   44998200 :         for (j = 0; j &lt; 5; j++)</span>
+<span class="lineNum">     454 </span>            :         {
+<span class="lineNum">     455 </span><span class="lineCov">   37498500 :             sum2 += C[i][j] * x[10 + i] * x[10 + j];</span>
+<span class="lineNum">     456 </span>            :         }
+<span class="lineNum">     457 </span>            :     }
+<span class="lineNum">     458 </span><span class="lineCov">    8999640 :     for (i = 0; i &lt; 5; i++)</span>
+<span class="lineNum">     459 </span>            :     {
+<span class="lineNum">     460 </span><span class="lineCov">    7499700 :         sum3 += D[i] * pow (x[10 + i], 3.0);</span>
+<span class="lineNum">     461 </span>            :     }
+<span class="lineNum">     462 </span><span class="lineCov">    1499940 :     f[0] = sum1 - sum2 - 2.0 * sum3;</span>
+<span class="lineNum">     463 </span><span class="lineCov">    1499940 :     f[0] = -f[0]; /* Max--&gt;Min, Modified by Jane,Nov 22 2005 */</span>
+<span class="lineNum">     464 </span>            :     /* constraints g &lt;= 0 */
+<span class="lineNum">     465 </span><span class="lineCov">    8999640 :     for (j = 0; j &lt; 5; j++)</span>
+<span class="lineNum">     466 </span>            :     {
+<span class="lineNum">     467 </span><span class="lineCov">    7499700 :         sum1 = 0.0;</span>
+<span class="lineNum">     468 </span><span class="lineCov">   44998200 :         for (i = 0; i &lt; 5; i++)</span>
+<span class="lineNum">     469 </span><span class="lineCov">   37498500 :             sum1 += C[i][j] * x[10 + i];</span>
+<span class="lineNum">     470 </span><span class="lineCov">    7499700 :         sum2 = 0.0;</span>
+<span class="lineNum">     471 </span><span class="lineCov">   82496700 :         for (i = 0; i &lt; 10; i++)</span>
+<span class="lineNum">     472 </span><span class="lineCov">   74997000 :             sum2 += A[i][j] * x[i];</span>
+<span class="lineNum">     473 </span><span class="lineCov">    7499700 :         g[j] = -((2.0 * sum1) + (3.0 * D[j] * pow (x[10 + j], 2.0)) + E[j] - sum2);</span>
+<span class="lineNum">     474 </span>            :     }
+<a name="475"><span class="lineNum">     475 </span><span class="lineCov">    1499940 : }</span></a>
+<span class="lineNum">     476 </span>            : 
+<span class="lineNum">     477 </span><span class="lineCov">    1499940 : void g20 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     478 </span>            : {
+<span class="lineNum">     479 </span>            :     double sum1, sum2, sumtotal;
+<span class="lineNum">     480 </span>            :     int i, j;
+<span class="lineNum">     481 </span><span class="lineCov">    1499940 :     double A[24] = { 0.0693, 0.0577, 0.05, 0.2, 0.26, 0.55, 0.06, 0.1, 0.12, 0.18, 0.1, 0.09, 0.0693, 0.0577, 0.05, 0.2, 0.26, 0.55, 0.06, 0.1, 0.12, 0.18, 0.1, 0.09 };</span>
+<span class="lineNum">     482 </span><span class="lineCov">    1499940 :     double B[24] = { 44.094, 58.12, 58.12, 137.4, 120.9, 170.9, 62.501, 84.94, 133.425, 82.507, 46.07, 60.097, 44.094, 58.12, 58.12, 137.4, 120.9, 170.9, 62.501, 84.94, 133.425, 82.507, 46.07, 60.097 };</span>
+<span class="lineNum">     483 </span><span class="lineCov">    1499940 :     double C[12] = { 123.7, 31.7, 45.7, 14.7, 84.7, 27.7, 49.7, 7.1, 2.1, 17.7, 0.85, 0.64 };</span>
+<span class="lineNum">     484 </span><span class="lineCov">    1499940 :     double D[12] = { 31.244, 36.12, 34.784, 92.7, 82.7, 91.6, 56.708, 82.7, 80.8, 64.517, 49.4, 49.1 };</span>
+<span class="lineNum">     485 </span><span class="lineCov">    1499940 :     double E[6] = { 0.1, 0.3, 0.4, 0.3, 0.6, 0.3 };</span>
+<span class="lineNum">     486 </span>            : 
+<span class="lineNum">     487 </span>            :     /* objective function */
+<span class="lineNum">     488 </span><span class="lineCov">    1499940 :     f[0] = 0.0;</span>
+<span class="lineNum">     489 </span><span class="lineCov">   37498500 :     for (j = 0; j &lt; 24; j++)</span>
+<span class="lineNum">     490 </span>            :     {
+<span class="lineNum">     491 </span><span class="lineCov">   35998560 :         f[0] += A[j] * x[j];</span>
+<span class="lineNum">     492 </span>            :     }
+<span class="lineNum">     493 </span>            :     /* constraints h(x) = 0 and g(x) &lt;= 0 */
+<span class="lineNum">     494 </span><span class="lineCov">    1499940 :     sum1 = 0.0;</span>
+<span class="lineNum">     495 </span><span class="lineCov">   19499220 :     for (j = 0; j &lt; 12; j++)</span>
+<span class="lineNum">     496 </span><span class="lineCov">   17999280 :         sum1 += x[j] / B[j];</span>
+<span class="lineNum">     497 </span><span class="lineCov">    1499940 :     sum2 = 0.0;</span>
+<span class="lineNum">     498 </span><span class="lineCov">   19499220 :     for (j = 12; j &lt; 24; j++)</span>
+<span class="lineNum">     499 </span><span class="lineCov">   17999280 :         sum2 += x[j] / B[j];</span>
+<span class="lineNum">     500 </span><span class="lineCov">   19499220 :     for (i = 0; i &lt; 12; i++)</span>
+<span class="lineNum">     501 </span><span class="lineCov">   17999280 :         h[i] = (x[i + 12] / (B[i + 12] * sum2)) - ((C[i] * x[i]) / (40.0 * B[i] * sum1));</span>
+<span class="lineNum">     502 </span><span class="lineCov">    1499940 :     sumtotal = 0.0;</span>
+<span class="lineNum">     503 </span><span class="lineCov">   37498500 :     for (j = 0; j &lt; 24; j++)</span>
+<span class="lineNum">     504 </span><span class="lineCov">   35998560 :         sumtotal += x[j];</span>
+<span class="lineNum">     505 </span><span class="lineCov">    1499940 :     h[12] = sumtotal - 1.0;</span>
+<span class="lineNum">     506 </span><span class="lineCov">    1499940 :     sum1 = 0.0;</span>
+<span class="lineNum">     507 </span><span class="lineCov">   19499220 :     for (j = 0; j &lt; 12; j++)</span>
+<span class="lineNum">     508 </span><span class="lineCov">   17999280 :         sum1 += x[j] / D[j];</span>
+<span class="lineNum">     509 </span><span class="lineCov">    1499940 :     sum2 = 0.0;</span>
+<span class="lineNum">     510 </span><span class="lineCov">   19499220 :     for (j = 12; j &lt; 24; j++)</span>
+<span class="lineNum">     511 </span><span class="lineCov">   17999280 :         sum2 += x[j] / B[j];</span>
+<span class="lineNum">     512 </span><span class="lineCov">    1499940 :     h[13] = sum1 + (0.7302 * 530.0 * (14.7 / 40)) * sum2 - 1.671;</span>
+<span class="lineNum">     513 </span><span class="lineCov">    5999760 :     for (j = 0; j &lt; 3; j++)</span>
+<span class="lineNum">     514 </span><span class="lineCov">    4499820 :         g[j] = (x[j] + x[j + 12]) / (sumtotal + E[j]);</span>
+<span class="lineNum">     515 </span><span class="lineCov">    5999760 :     for (j = 3; j &lt; 6; j++)</span>
+<span class="lineNum">     516 </span><span class="lineCov">    4499820 :         g[j] = (x[j + 3] + x[j + 15]) / (sumtotal + E[j]);</span>
+<a name="517"><span class="lineNum">     517 </span><span class="lineCov">    1499940 : }</span></a>
+<span class="lineNum">     518 </span>            : 
+<span class="lineNum">     519 </span><span class="lineCov">     295915 : void g21 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     520 </span>            : {
+<span class="lineNum">     521 </span>            :     int i;
+<span class="lineNum">     522 </span>            : 
+<span class="lineNum">     523 </span>            :     /* objective function */
+<span class="lineNum">     524 </span><span class="lineCov">     295915 :     f[0] = x[0];</span>
+<span class="lineNum">     525 </span>            :     /* constraint functions h(x) and g(x) &lt;= 0 */
+<span class="lineNum">     526 </span><span class="lineCov">     295915 :     g[0] = -x[0] + 35.0 * pow (x[1], 0.6) + 35.0 * pow (x[2], 0.6);</span>
+<span class="lineNum">     527 </span><span class="lineCov">     295915 :     h[0] = -300.0 * x[2] + 7500 * x[4] - 7500 * x[5] - 25.0 * x[3] * x[4] + 25.0 * x[3] * x[5] + x[2] * x[3];</span>
+<span class="lineNum">     528 </span><span class="lineCov">     295915 :     h[1] = 100.0 * x[1] + 155.365 * x[3] + 2500 * x[6] - x[1] * x[3] - 25.0 * x[3] * x[6] - 15536.5;</span>
+<span class="lineNum">     529 </span><span class="lineCov">     295915 :     h[2] = -x[4] + log (-x[3] + 900.0);</span>
+<span class="lineNum">     530 </span><span class="lineCov">     295915 :     h[3] = -x[5] + log (x[3] + 300.0);</span>
+<span class="lineNum">     531 </span><span class="lineCov">     295915 :     h[4] = -x[6] + log (-2.0 * x[3] + 700.0);</span>
+<a name="532"><span class="lineNum">     532 </span><span class="lineCov">     295915 : }</span></a>
+<span class="lineNum">     533 </span>            : 
+<span class="lineNum">     534 </span><span class="lineCov">      24400 : void g22 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     535 </span>            : {
+<span class="lineNum">     536 </span>            :     int i;
+<span class="lineNum">     537 </span>            : 
+<span class="lineNum">     538 </span>            :     /* objective function */
+<span class="lineNum">     539 </span><span class="lineCov">      24400 :     f[0] = x[0];</span>
+<span class="lineNum">     540 </span>            :     /* constraint functions */
+<span class="lineNum">     541 </span><span class="lineCov">      24400 :     g[0] = -x[0] + pow (x[1], 0.6) + pow (x[2], 0.6) + pow (x[3], 0.6);</span>
+<span class="lineNum">     542 </span><span class="lineCov">      24400 :     h[0] = x[4] - 100000.0 * x[7] + 10000000.0;</span>
+<span class="lineNum">     543 </span><span class="lineCov">      24400 :     h[1] = x[5] + 100000.0 * x[7] - 100000.0 * x[8];</span>
+<span class="lineNum">     544 </span><span class="lineCov">      24400 :     h[2] = x[6] + 100000.0 * x[8] - 50000000.0;</span>
+<span class="lineNum">     545 </span><span class="lineCov">      24400 :     h[3] = x[4] + 100000.0 * x[9] - 33000000.0;</span>
+<span class="lineNum">     546 </span><span class="lineCov">      24400 :     h[4] = x[5] + 100000 * x[10] - 44000000.0;</span>
+<span class="lineNum">     547 </span><span class="lineCov">      24400 :     h[5] = x[6] + 100000 * x[11] - 66000000.0;</span>
+<span class="lineNum">     548 </span><span class="lineCov">      24400 :     h[6] = x[4] - 120.0 * x[1] * x[12];</span>
+<span class="lineNum">     549 </span><span class="lineCov">      24400 :     h[7] = x[5] - 80.0 * x[2] * x[13];</span>
+<span class="lineNum">     550 </span><span class="lineCov">      24400 :     h[8] = x[6] - 40.0 * x[3] * x[14];</span>
+<span class="lineNum">     551 </span><span class="lineCov">      24400 :     h[9] = x[7] - x[10] + x[15];</span>
+<span class="lineNum">     552 </span><span class="lineCov">      24400 :     h[10] = x[8] - x[11] + x[16];</span>
+<span class="lineNum">     553 </span><span class="lineCov">      24400 :     h[11] = -x[17] + log (x[9] - 100.0);/*bug fixed by Jane,Nov 25 2005*/</span>
+<span class="lineNum">     554 </span><span class="lineCov">      24400 :     h[12] = -x[18] + log (-x[7] + 300.0);</span>
+<span class="lineNum">     555 </span><span class="lineCov">      24400 :     h[13] = -x[19] + log (x[15]);</span>
+<span class="lineNum">     556 </span><span class="lineCov">      24400 :     h[14] = -x[20] + log (-x[8] + 400.0);</span>
+<span class="lineNum">     557 </span><span class="lineCov">      24400 :     h[15] = -x[21] + log (x[16]);</span>
+<span class="lineNum">     558 </span><span class="lineCov">      24400 :     h[16] = -x[7] - x[9] + x[12] * x[17] - x[12] * x[18] + 400.0;</span>
+<span class="lineNum">     559 </span><span class="lineCov">      24400 :     h[17] = x[7] - x[8] - x[10] + x[13] * x[19] - x[13] * x[20] + 400.0;</span>
+<span class="lineNum">     560 </span><span class="lineCov">      24400 :     h[18] = x[8] - x[11] - 4.60517 * x[14] + x[14] * x[21] + 100.0;</span>
+<a name="561"><span class="lineNum">     561 </span><span class="lineCov">      24400 : }</span></a>
+<span class="lineNum">     562 </span>            : 
+<span class="lineNum">     563 </span><span class="lineCov">    1499940 : void g23 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     564 </span>            : {
+<span class="lineNum">     565 </span>            :     int i;
+<span class="lineNum">     566 </span>            : 
+<span class="lineNum">     567 </span>            :     /* objective function */
+<span class="lineNum">     568 </span><span class="lineCov">    1499940 :     f[0] = -9.0 * x[4] - 15.0 * x[7] + 6.0 * x[0] + 16.0 * x[1] + 10.0 * (x[5] + x[6]);</span>
+<span class="lineNum">     569 </span>            :     /* constraint function */
+<span class="lineNum">     570 </span><span class="lineCov">    1499940 :     g[0] = x[8] * x[2] + 0.02 * x[5] - 0.025 * x[4];</span>
+<span class="lineNum">     571 </span><span class="lineCov">    1499940 :     g[1] = x[8] * x[3] + 0.02 * x[6] - 0.015 * x[7];</span>
+<span class="lineNum">     572 </span><span class="lineCov">    1499940 :     h[0] = x[0] + x[1] - x[2] - x[3];</span>
+<span class="lineNum">     573 </span><span class="lineCov">    1499940 :     h[1] = 0.03 * x[0] + 0.01 * x[1] - x[8] * (x[2] + x[3]);</span>
+<span class="lineNum">     574 </span><span class="lineCov">    1499940 :     h[2] = x[2] + x[5] - x[4];</span>
+<span class="lineNum">     575 </span><span class="lineCov">    1499940 :     h[3] = x[3] + x[6] - x[7];</span>
+<a name="576"><span class="lineNum">     576 </span><span class="lineCov">    1499940 : }</span></a>
+<span class="lineNum">     577 </span>            : 
+<span class="lineNum">     578 </span><span class="lineCov">       6340 : void g24 (double *x, double *f, double *g, double *h, int nx)</span>
+<span class="lineNum">     579 </span>            : {
+<span class="lineNum">     580 </span>            :     /* objective function */
+<span class="lineNum">     581 </span><span class="lineCov">       6340 :     f[0] = -x[0] - x[1];</span>
+<span class="lineNum">     582 </span>            :     /* constraint function */
+<span class="lineNum">     583 </span><span class="lineCov">       6340 :     g[0] = -2.0 * pow (x[0], 4.0) + 8.0 * pow (x[0], 3.0) - 8.0 * pow (x[0], 2.0) + x[1] - 2.0;</span>
+<span class="lineNum">     584 </span><span class="lineCov">       6340 :     g[1] = -4.0 * pow (x[0], 4.0) + 32.0 * pow (x[0], 3.0) - 88.0 * pow (x[0], 2.0) + 96.0 * x[0] + x[1] - 36.0;</span>
+<span class="lineNum">     585 </span><span class="lineCov">       6340 : }</span>
+<span class="lineNum">     586 </span>            : 
+<span class="lineNum">     587 </span>            : 
+<span class="lineNum">     588 </span>            : 
+<span class="lineNum">     589 </span>            : } // naspace CEC2006
+<span class="lineNum">     590 </span>            : 
+<span class="lineNum">     591 </span>            : } // namespace mde
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

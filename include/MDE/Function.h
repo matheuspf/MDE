@@ -33,7 +33,8 @@ struct Function
 
 
     /// Dummy value for the optimal parameter.
-    Function (double optimal = -1e8) : optimal(optimal) {}
+    Function (double optimal = -1e8) : optimal(optimal), lowerBounds(NumVariables, -1e8),
+                                       upperBounds(NumVariables, 1e8) {}
 
 
     /// The user may or may not supply the number of variables 'N'

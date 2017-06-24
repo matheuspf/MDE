@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - libbash test coverage - include/MDE/Vector.h</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">include/MDE</a> - Vector.h<span style="font-size: 80%;"> (source / <a href="Vector.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">libbash test coverage</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2017-06-24 02:19:11</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">106</td>
+            <td class="headerCovTableEntry">120</td>
+            <td class="headerCovTableEntryMed">88.3 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /** \file Vector.h</a>
+<span class="lineNum">       2 </span>            :   *
+<span class="lineNum">       3 </span>            :   * General 'Vector' type containing information about fitness and
+<span class="lineNum">       4 </span>            :   * constraints values. If the size is specified at compile time, the
+<span class="lineNum">       5 </span>            :   * class will inherit from 'std::array'. Otherwise, it will inherit
+<span class="lineNum">       6 </span>            :   * from 'std::vector'. Also, if the size specified at compile time is 
+<span class="lineNum">       7 </span>            :   * too big, we use a 'std::vector' to avoid stack overflow. Some
+<span class="lineNum">       8 </span>            :   * construtor definitions were made to make the interface of
+<span class="lineNum">       9 </span>            :   * 'std::array' compatible.
+<span class="lineNum">      10 </span>            :   *
+<span class="lineNum">      11 </span>            : */
+<span class="lineNum">      12 </span>            : 
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : #ifndef MDE_VECTOR_H
+<span class="lineNum">      15 </span>            : #define MDE_VECTOR_H
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : #include &lt;type_traits&gt;
+<span class="lineNum">      18 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      19 </span>            : #include &lt;array&gt;
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : namespace mde
+<span class="lineNum">      22 </span>            : {
+<span class="lineNum">      23 </span>            : 
+<span class="lineNum">      24 </span>            : namespace help
+<span class="lineNum">      25 </span>            : {
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : /// Selects 'std::array' if '(N == 0 || N &gt;= maxSize * sizeof(T)'. Else, selects 'std::vector'
+<span class="lineNum">      28 </span>            : template&lt;typename T, std::size_t N&gt;
+<span class="lineNum">      29 </span>            : struct SelectType
+<span class="lineNum">      30 </span>            : {
+<span class="lineNum">      31 </span>            :     /// Maximum size to allow the creation of 'Vector' on the stack.
+<span class="lineNum">      32 </span>            :     static constexpr std::size_t maxSize = 10000 * sizeof(char);
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span>            :     using type = std::conditional_t&lt;(N == 0 || N &gt;= maxSize * sizeof(T)), std::vector&lt;T&gt;, std::array&lt;T, N&gt;&gt;;
+<span class="lineNum">      35 </span>            : };
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : /// Alias
+<span class="lineNum">      38 </span>            : template&lt;typename T, std::size_t N&gt;
+<span class="lineNum">      39 </span>            : using SelectType_t = typename SelectType&lt;T, N&gt;::type;
+<span class="lineNum">      40 </span>            : 
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            : 
+<a name="43"><span class="lineNum">      43 </span>            : /// 'VectorBase' class, inheriting from the selected type.</a>
+<span class="lineNum">      44 </span>            : template&lt;typename T, std::size_t N = 0&gt;
+<span class="lineNum">      45 </span><span class="lineCov">    1899482 : struct VectorBase : public SelectType_t&lt;T, N&gt;</span>
+<span class="lineNum">      46 </span>            : {
+<a name="47"><span class="lineNum">      47 </span>            :     /// Inherits all constructors of std::vector, given that std::array has no constructor</a>
+<span class="lineNum">      48 </span>            :     using Base = SelectType_t&lt;T, N&gt;;
+<span class="lineNum">      49 </span><span class="lineCov">     629100 :     using Base::Base;</span>
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            :     /// Just for convenience
+<span class="lineNum">      53 </span>            :     static constexpr bool isArray =  std::is_same&lt;std::array&lt;T, N&gt;, Base&gt;::value;
+<span class="lineNum">      54 </span>            :     static constexpr bool isVector = std::is_same&lt;std::vector&lt;T&gt;, Base&gt;::value;
+<span class="lineNum">      55 </span>            : 
+<a name="56"><span class="lineNum">      56 </span>            : </a>
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span><span class="lineCov">       1979 :     VectorBase() : Base() {}</span>
+<span class="lineNum">      59 </span>            : 
+<a name="60"><span class="lineNum">      60 </span>            :     /// Constructor needed for list initialization if inheriting from std::array</a>
+<span class="lineNum">      61 </span>            :     template&lt;typename U = Base, typename = std::enable_if_t&lt;std::is_same&lt;std::array&lt;T, N&gt;, U&gt;::value&gt;&gt;
+<span class="lineNum">      62 </span><span class="lineCov">         16 :     VectorBase(std::initializer_list&lt;T&gt; in)</span>
+<span class="lineNum">      63 </span><span class="lineCov">         16 :     {</span>
+<span class="lineNum">      64 </span><span class="lineCov">         16 :         std::copy(in.begin(), in.end(), this-&gt;begin());</span>
+<span class="lineNum">      65 </span><span class="lineCov">         16 :     }</span>
+<span class="lineNum">      66 </span>            : 
+<a name="67"><span class="lineNum">      67 </span>            :     /// Constructor for std::array to make the interface uniform with std::vector</a>
+<span class="lineNum">      68 </span>            :     template&lt;typename U = Base, typename = std::enable_if_t&lt;std::is_same&lt;std::array&lt;T, N&gt;, U&gt;::value&gt;&gt;
+<span class="lineNum">      69 </span><span class="lineCov">   12953787 :     VectorBase(int, const T&amp; t = T{})</span>
+<span class="lineNum">      70 </span><span class="lineCov">   12953787 :     {</span>
+<span class="lineNum">      71 </span><span class="lineCov">   12953787 :         std::fill(this-&gt;begin(), this-&gt;end(), t);</span>
+<span class="lineNum">      72 </span><span class="lineCov">   12953787 :     }</span>
+<span class="lineNum">      73 </span>            : };
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : 
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span>            : /** The actual 'Vector' class. Uses 'double' and stores both
+<span class="lineNum">      79 </span>            :   * fitness and violation values, initially set to a very large
+<span class="lineNum">      80 </span>            :   * value (1e18), so that this vector is worst than anything.
+<a name="81"><span class="lineNum">      81 </span>            : */</a>
+<span class="lineNum">      82 </span>            : template&lt;std::size_t N = 0&gt;
+<span class="lineNum">      83 </span><span class="lineCov">    1901461 : struct Vector : public help::VectorBase&lt;double, N&gt;</span>
+<a name="84"><span class="lineNum">      84 </span>            : {</a>
+<span class="lineNum">      85 </span>            :     /// Inherits all the constructors
+<span class="lineNum">      86 </span><span class="lineCov">   13582903 :     using help::VectorBase&lt;double, N&gt;::VectorBase;</span>
+<span class="lineNum">      87 </span>            : 
+<a name="88"><span class="lineNum">      88 </span>            : </a>
+<span class="lineNum">      89 </span>            :     /// Feasible condition: no violation
+<span class="lineNum">      90 </span><span class="lineCov">   30811849 :     inline bool feasible () const { return violation == 0.0; }</span>
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            :     /** The comparison function used in MDE. If both vectors are 
+<span class="lineNum">      94 </span>            :       * feasible (violation == 0.0), the one with smaller fitness 
+<span class="lineNum">      95 </span>            :       * is better. If onevector is feasible and the other is not, 
+<span class="lineNum">      96 </span>            :       * the feasible vector is better. If both vectors are infeasible, 
+<a name="97"><span class="lineNum">      97 </span>            :       * the one with smallest violation is better.</a>
+<span class="lineNum">      98 </span>            :     */
+<span class="lineNum">      99 </span><span class="lineCov">   11623690 :     bool operator &lt; (const Vector&amp; x) const</span>
+<span class="lineNum">     100 </span>            :     {
+<span class="lineNum">     101 </span><span class="lineCov">   11623690 :         if(this-&gt;feasible() &amp;&amp; x.feasible())</span>
+<span class="lineNum">     102 </span><span class="lineCov">    5134370 :             return this-&gt;fitness &lt; x.fitness;</span>
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span><span class="lineCov">    6489320 :         if(this-&gt;feasible())</span>
+<span class="lineNum">     105 </span><span class="lineCov">     690377 :             return true;</span>
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span><span class="lineCov">    5798943 :         if(x.feasible())</span>
+<span class="lineNum">     108 </span><span class="lineCov">    1272741 :             return false;</span>
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span><span class="lineCov">    4526202 :         return this-&gt;violation &lt; x.violation;</span>
+<span class="lineNum">     111 </span>            :     }
+<span class="lineNum">     112 </span>            :     
+<span class="lineNum">     113 </span>            : 
+<span class="lineNum">     114 </span>            :     /// Fitness and violation values
+<span class="lineNum">     115 </span>            :     double fitness = 1e18;
+<span class="lineNum">     116 </span>            :     double violation = 1e18;
+<span class="lineNum">     117 </span>            : };
+<span class="lineNum">     118 </span>            : 
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span>            : } // namespace help
+<span class="lineNum">     121 </span>            : 
+<span class="lineNum">     122 </span>            : } // namespace mde
+<span class="lineNum">     123 </span>            : 
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            : #endif //MDE_VECTOR_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

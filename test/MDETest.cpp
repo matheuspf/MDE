@@ -8,22 +8,20 @@ using namespace mde;
 using namespace mde::CEC2006;
 
 
-#define TEST_FUNCTION(FUNC)       \
-							      \
-TEST_F(MDETest, FUNC)         \
-{							      \
-	using namespace mde;		  \
-	using namespace mde::CEC2006; \
-								  \
- 	FUNC func;				      \
-						          \
-	MDE<FUNC> mde(params, func);  \
-							      \
-	SCOPED_TRACE(#FUNC); 	      \
-							      \
-	check(mde(), 			      \
-		  func.lowerBounds,       \
-		  func.upperBounds);      \
+#define TEST_FUNCTION(FUNC)       		  \
+							      		  \
+TEST_F(MDETest, FUNC)         	  		  \
+{							      		  \
+	using namespace mde;		  		  \
+	using namespace mde::CEC2006; 		  \
+						          		  \
+	MDE<FUNC> mde(params);  			  \
+							      		  \
+	SCOPED_TRACE(#FUNC); 	      		  \
+							      		  \
+	check(mde(), 			      		  \
+		  mde.function.lowerBounds,       \
+		  mde.function.upperBounds);      \
 }
 
 
@@ -106,10 +104,10 @@ struct MDETest : public ::testing::Test
 
 struct Ackley : public mde::Function<>
 {
-    Ackley (int N = 20) : N(N), a(20.0), b(0.2), c(8.0*std::atan(1.0)), l(-30.0), r(30.0)
+    Ackley (int M = 20) : a(20.0), b(0.2), c(8.0*std::atan(1.0)), l(-30.0), r(30.0)
     {
-        lowerBounds = Vector(N, l);
-        upperBounds = Vector(N, r);
+        lowerBounds = Vector(M, l);
+        upperBounds = Vector(M, r);
     }
 
 
@@ -118,10 +116,9 @@ struct Ackley : public mde::Function<>
         double y1 = std::accumulate(v.begin(), v.end(), 0.0, [&](double acum, double x){ return acum + x*x; });
         double y2 = std::accumulate(v.begin(), v.end(), 0.0, [&](double acum, double x){ return acum + std::cos(c * x); });
 
-        return -a * std::exp(-b * std::sqrt(y1 / N)) - std::exp(y2 / N) + a + std::exp(1.0);
+        return -a * std::exp(-b * std::sqrt(y1 / v.size())) - std::exp(y2 / v.size()) + a + std::exp(1.0);
     }
 
-    int N;
     double a, b, c, l, r;
 };
 
@@ -129,12 +126,11 @@ struct Ackley : public mde::Function<>
 
 struct Rosenbrock : mde::Function<>
 {
-    Rosenbrock (int N = 10) : N(N)
+    Rosenbrock (int M = 10)
     {
+        lowerBounds = Vector(M, -10.0);
+        upperBounds = Vector(M, 10.0);
         optimal = 1e-10;
-
-        lowerBounds = Vector(N, -10.0);
-        upperBounds = Vector(N, 10.0);
     }
 
 
@@ -142,23 +138,21 @@ struct Rosenbrock : mde::Function<>
     {
         double r = 0.0;
 
-        for(int i = 0; i < N - 1; ++i)
+        for(int i = 0; i < x.size() - 1; ++i)
             r += 100.0 * std::pow(x[i] * x[i] - x[i+1], 2) + std::pow(x[i] - 1.0, 2);
 
         return r;
     }
-
-    int N;
 };
 
 
 
-struct ConstRosenbrock : mde::Function<2>
+struct ConstRosenbrock : mde::Function<>
 {
 	ConstRosenbrock ()
 	{
-		lowerBounds = {0.0, 0.2};
-		upperBounds = {0.5, 0.8};
+		//lowerBounds = {0.0, 0.2};
+		//upperBounds = {0.5, 0.8};
 	}
 
 
@@ -171,8 +165,9 @@ struct ConstRosenbrock : mde::Function<2>
 	{
 		return std::pow(x[0] - 1.0/3, 2) + std::pow(x[1] - 1.0/3, 2) - std::pow(1.0/3, 2);
 	}
-};
 
+	int N = 2;
+};
 
 
 
@@ -201,9 +196,44 @@ TEST_FUNCTION(F22)
 TEST_FUNCTION(F23)
 TEST_FUNCTION(F24)
 
-TEST_FUNCTION(Ackley)
-TEST_FUNCTION(Rosenbrock)
-TEST_FUNCTION(ConstRosenbrock)
+
+
+
+TEST_F(MDETest, Ackley)
+{
+	params.bndHandle = "clip";
+
+	MDE<Ackley> mde(params);
+							      
+	SCOPED_TRACE("Ackley"); 	      
+							      
+	check(mde(), mde.function.lowerBounds, mde.function.upperBounds);
+}
+
+
+TEST_F(MDETest, Rosenbrock)
+{
+	params.bndHandle = "reinitialize";
+
+	MDE<Rosenbrock> mde(params);
+							      
+	SCOPED_TRACE("Rosenbrock"); 	      
+							      
+	check(mde(), mde.function.lowerBounds, mde.function.upperBounds);
+}
+
+
+TEST_F(MDETest, ConstRosenbrock)
+{
+	params.bndHandle = "reinitialize";
+
+	MDE<ConstRosenbrock> mde(params);
+							      
+	SCOPED_TRACE("ConstRosenbrock"); 	      
+							      
+	check(mde(), mde.function.lowerBounds, mde.function.upperBounds);
+}
+
 
 
 
